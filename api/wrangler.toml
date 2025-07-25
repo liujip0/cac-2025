@@ -1,0 +1,9 @@
+name = "cac-2025-api"
+compatibility_flags = ["nodejs_compat"]
+compatibility_date = "2025-07-25"
+main = "src/index.ts"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cac-2025-db"
+database_id = "2dc9e8fe-035a-4d1f-9f9a-11256abd3b26"

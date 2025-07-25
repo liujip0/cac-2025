@@ -1,3 +1,4 @@
+import { D1Database } from "@cloudflare/workers-types";
 import {
   FetchCreateContextFnOptions,
   fetchRequestHandler,
@@ -5,7 +6,9 @@ import {
 import { createContext } from "./context.ts";
 import { appRouter } from "./router.ts";
 
-export interface Env {}
+export interface Env {
+  DB: D1Database;
+}
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
