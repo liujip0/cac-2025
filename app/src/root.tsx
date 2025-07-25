@@ -1,3 +1,7 @@
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 import {
   isRouteErrorResponse,
   Links,
@@ -5,10 +9,35 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  type LinksFunction,
+  type MetaFunction,
 } from "react-router";
 import type { Route } from "./+types/root";
 import "./app.css";
 import styles from "./root.module.css";
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const meta: MetaFunction = () => {
+  return [
+    {
+      title: "HS Internship Finder",
+    },
+    {
+      property: "description",
+      content: "A platform to find high school internships easily.",
+    },
+  ];
+};
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const links: LinksFunction = () => {
+  return [
+    {
+      rel: "icon",
+      href: "/favicon.ico",
+    },
+  ];
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

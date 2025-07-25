@@ -1,3 +1,12 @@
 .topBarContainer {
   width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 16px 2em;
+
+  background-color: var(--color-primary);
+}
+
+.spacer {
+  flex-grow: 1;
 }

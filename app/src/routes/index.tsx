@@ -1,10 +1,5 @@
-import TopBar from "src/components/TopBar/TopBar.tsx";
-import globalStyles from "../globalStyles.module.css";
+import Scaffold from "src/components/Scaffold/Scaffold.tsx";
 
 export default function Index() {
-  return (
-    <div className={globalStyles.screenContainer}>
-      <TopBar />
-    </div>
-  );
+  return <Scaffold>lalalalal</Scaffold>;
 }
