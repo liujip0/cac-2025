@@ -7,6 +7,10 @@
   background-color: var(--color-primary);
 }
 
+.title {
+  font-family: var(--text-font-family);
+}
+
 .spacer {
   flex-grow: 1;
 }

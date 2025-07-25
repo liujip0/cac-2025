@@ -1,5 +1,5 @@
 {
-  "name": "cac-2025",
+  "name": "@cac-2025/app",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^5.2.6",
+    "@mui/icons-material": "^7.2.0",
     "@react-router/node": "^7.7.0",
     "@react-router/serve": "^7.7.0",
     "isbot": "^5.1.28",

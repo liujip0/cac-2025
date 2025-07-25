@@ -5,6 +5,11 @@
   flex-direction: column;
 }
 
+.bottomContainer {
+  height: 100%;
+  display: flex;
+}
+
 .contentContainer {
   flex-grow: 1;
 }

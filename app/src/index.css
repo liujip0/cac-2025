@@ -1,10 +1,15 @@
 :root {
   --color-primary: tan;
   --color-primary-contrastText: black;
+  --color-secondary: gray;
+
+  --text-font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
 
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html,

@@ -13,7 +13,7 @@ import {
   type MetaFunction,
 } from "react-router";
 import type { Route } from "./+types/root";
-import "./app.css";
+import "./index.css";
 import styles from "./root.module.css";
 
 // eslint-disable-next-line react-refresh/only-export-components
