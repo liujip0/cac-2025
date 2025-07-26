@@ -4,6 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/cac-2025",
   plugins: [reactRouter(), tsconfigPaths()],
   server: {
     port: 5174,

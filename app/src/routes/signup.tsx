@@ -1,5 +1,5 @@
-import Scaffold from "src/components/Scaffold/Scaffold.tsx";
+import styles from "./signup.module.css";
 
 export default function Signup() {
-  return <Scaffold>Sign Up</Scaffold>;
+  return <div className={styles.screenContainer}>Sign Up</div>;
 }
