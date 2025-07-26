@@ -34,7 +34,7 @@ export const links: LinksFunction = () => {
   return [
     {
       rel: "icon",
-      href: "/favicon.ico",
+      href: import.meta.env.BASE_URL + "favicon.ico",
     },
   ];
 };
