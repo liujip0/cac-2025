@@ -40,8 +40,6 @@ jobs:
         run: |
           sed -i -e 's|// ! \[REPLACE WITH BASE IN GITHUB PAGES WORKFLOW\]|base: "/cac-2025/",|' app/vite.config.mts
           sed -i -e 's|// ! \[REPLACE WITH BASE IN GITHUB PAGES WORKFLOW\]|basename: "/cac-2025",|' app/react-router.config.ts
-          cat app/vite.config.mts
-          cat app/react-router.config.ts
       - name: Build
         run: cd app && pnpm run build
       - name: Setup Pages
