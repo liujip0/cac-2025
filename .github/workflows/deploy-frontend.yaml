@@ -34,6 +34,8 @@ jobs:
         uses: pnpm/action-setup@v4
       - name: Install dependencies
         run: pnpm install
+      - name: Change directory
+        run: cd app
       - name: Build
         run: pnpm run build
       - name: Setup Pages
