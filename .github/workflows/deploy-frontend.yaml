@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Change directory
-        run: cd app && ls
+        run: cd app && pnpm run
       - name: Build
         run: pnpm run build
       - name: Setup Pages
