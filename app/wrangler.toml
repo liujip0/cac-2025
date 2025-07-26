@@ -1,0 +1,10 @@
+name = "cac-2025"
+compatibility_date = "2025-07-26"
+send_metrics = false
+
+[assets]
+directory = "build/client"
+not_found_handling = "single-page-application"
+
+[observability.logs]
+enabled = true

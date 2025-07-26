@@ -12,6 +12,7 @@
   "packageManager": "pnpm@10.13.1",
   "devDependencies": {
     "concurrently": "^9.2.0",
+    "jiti": "^2.5.1",
     "prettier": "^3.6.2"
   }
 }
