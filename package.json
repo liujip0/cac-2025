@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently --names app -c green \"pnpm app:dev\"",
-    "app:dev": "cd app && pnpm dev"
+    "dev": "concurrently --names app,api -c green,blue \"pnpm app:dev\" \"pnpm api:dev\"",
+    "app:dev": "cd app && pnpm dev",
+    "api:dev": "cd api && pnpm dev"
   },
   "keywords": [],
   "author": "liujip0",
