@@ -1,0 +1,12 @@
+.topBar {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  background-color: var(--color-primary);
+}
+
+.title {
+  font-family: var(--text-font-family);
+  font-size: var(--text-h1-size);
+}

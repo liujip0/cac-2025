@@ -10,10 +10,8 @@
     --text-helperText-size-fallback
   ); /* default: 0.75em */
 
-  --color-primary: var(--color-primary-fallback); /* default: blue */
-  --color-primary-contrastText: var(
-    --color-primary-contrastText-fallback
-  ); /* default: white */
+  --color-primary: tan; /* default: blue */
+  --color-primary-contrastText: black; /* default: white */
   --color-secondary: var(--color-secondary-fallback); /* default: orange */
   --color-secondary-contrastText: var(
     --color-secondary-contrastText-fallback
@@ -33,7 +31,7 @@
   --z-index-modal: var(--z-index-modal-fallback); /* default: 101 */
   --z-index-tooltip: var(--z-index-tooltip-fallback); /* default: 102 */
 
-  --border-radius: var(--border-radius-fallback); /* default: 0 */
+  --border-radius: 4px; /* default: 0 */
   --border-width: var(--border-width-fallback); /* default: 1px */
   --input-height: var(--input-height-fallback); /* default: calc(37.6 + 8px) */
   --hover-dim: var(--hover-dim-fallback); /* default: brightness(0.8) */

@@ -1,3 +1,4 @@
+import "@liujip0/components";
 import "@material-symbols/font-400";
 import { QueryClientProvider } from "@tanstack/react-query";
 import {
@@ -19,7 +20,7 @@ import { queryClient } from "./trpc.ts";
 export const meta: MetaFunction = () => {
   return [
     {
-      title: "liujip0-web-template",
+      title: "HS Internship Finder",
     },
   ];
 };
