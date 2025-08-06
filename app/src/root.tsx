@@ -1,5 +1,5 @@
 import "@liujip0/components";
-import "@material-symbols/font-400";
+import "@material-symbols/font-400/outlined.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import {
   isRouteErrorResponse,
