@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   padding: 16px;
+  gap: 8px;
 
   border-radius: var(--border-radius);
   background-color: var(--color-paper);
@@ -16,13 +17,15 @@
 .quickInfo {
   display: flex;
   flex-wrap: wrap;
+  gap: 8px;
 }
 
 .infoChip {
   display: flex;
   align-items: center;
-  padding: 2px;
+  padding: 3px 6px;
   border-radius: var(--border-radius);
+  gap: 4px;
 
   background-color: var(--color-primary);
   font-family: var(--text-font-family);
@@ -30,5 +33,10 @@
 }
 
 .infoChip > span {
-  font-size: 16px;
+  font-size: 20px;
+}
+
+.description {
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
 }
