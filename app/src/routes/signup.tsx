@@ -1,11 +1,15 @@
 import { Button, Input, Password } from "@liujip0/components";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import z from "zod";
 import TopBar from "../components/TopBar/TopBar.tsx";
 import { trpc } from "../trpc.ts";
 import styles from "./signup.module.css";
 
-export default function SignUp() {
+export default function Signup() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -22,7 +26,18 @@ export default function SignUp() {
   const [lastNameError, setLastNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const signup = useMutation(trpc.users.signup.mutationOptions());
+  const [signupError, setSignupError] = useState("");
+  const signup = useMutation(
+    trpc.users.signup.mutationOptions({
+      onSuccess: () => {
+        setSignupError("");
+        navigate("/login");
+      },
+      onError: (error) => {
+        setSignupError("Error: " + error.message);
+      },
+    })
+  );
 
   return (
     <div className={styles.page}>
@@ -89,6 +104,7 @@ export default function SignUp() {
           className={styles.submitButton}
           onClick={async () => {
             let error = false;
+            setSignupError("");
             await checkusername.refetch();
 
             if (!checkusername.data?.ok) {
@@ -96,6 +112,9 @@ export default function SignUp() {
             }
             if (email.length === 0) {
               setEmailError("Email is required");
+              error = true;
+            } else if (!z.email().safeParse(email).success) {
+              setEmailError("Invalid email address");
               error = true;
             } else {
               setEmailError("");
@@ -131,6 +150,7 @@ export default function SignUp() {
           }}>
           Submit
         </Button>
+        <p className={styles.error}>{signupError}</p>
       </div>
     </div>
   );

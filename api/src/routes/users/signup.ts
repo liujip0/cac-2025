@@ -8,7 +8,7 @@ export const signup = publicProcedure
     z.object({
       username: z.string(),
       password: z.string(),
-      email: z.string().email(),
+      email: z.email(),
       firstName: z.string(),
       lastName: z.string(),
     })
