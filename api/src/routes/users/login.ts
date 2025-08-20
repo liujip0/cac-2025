@@ -3,16 +3,8 @@ import { TRPCError } from "@trpc/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import z from "zod";
+import type { UsersRow } from "../../dbtypes/Users.ts";
 import { publicProcedure } from "../../trpc.ts";
-
-type UsersRow = {
-  username: string;
-  password_hash: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  token_secret: string;
-};
 
 export const login = publicProcedure
   .input(
@@ -54,6 +46,7 @@ export const login = publicProcedure
           return jwt.sign(
             {
               token_secret: user.results[0].token_secret,
+              username: user.results[0].username,
             },
             opts.ctx.env.JWT_SECRET_KEY,
             {

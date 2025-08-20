@@ -11,7 +11,7 @@ type CheckUsernameResult =
       message: string;
     };
 
-export const checkusername = publicProcedure
+export const checkUsername = publicProcedure
   .input(z.string())
   .query(async (opts) => {
     if (opts.input.length < 3) {

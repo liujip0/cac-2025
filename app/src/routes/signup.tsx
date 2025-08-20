@@ -16,8 +16,8 @@ export default function Signup() {
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
 
-  const checkusername = useQuery(
-    trpc.users.checkusername.queryOptions(username, {
+  const checkUsername = useQuery(
+    trpc.users.checkUsername.queryOptions(username, {
       initialData: { ok: true },
     })
   );
@@ -86,8 +86,8 @@ export default function Signup() {
             setUsername(value);
           }}
           label="Username"
-          error={!checkusername.data?.ok}
-          helperText={checkusername.data?.ok ? "" : checkusername.data.message}
+          error={!checkUsername.data?.ok}
+          helperText={checkUsername.data?.ok ? "" : checkUsername.data.message}
         />
         <Password
           id="signup-password"
@@ -105,9 +105,9 @@ export default function Signup() {
           onClick={async () => {
             let error = false;
             setSignupError("");
-            await checkusername.refetch();
+            await checkUsername.refetch();
 
-            if (!checkusername.data?.ok) {
+            if (!checkUsername.data?.ok) {
               error = false;
             }
             if (email.length === 0) {
