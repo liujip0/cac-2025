@@ -1,9 +1,14 @@
 import { Button, Input, Password } from "@liujip0/components";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import TopBar from "../components/TopBar/TopBar.tsx";
+import { trpc } from "../trpc.ts";
 import styles from "./login.module.css";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -11,6 +16,22 @@ export default function Login() {
   const [passwordError, setPasswordError] = useState("");
 
   const [loginError, setLoginError] = useState("");
+  const login = useMutation(
+    trpc.users.login.mutationOptions({
+      onSuccess: (data) => {
+        if (data) {
+          setLoginError("");
+          localStorage.setItem("api_token", data);
+          navigate("/");
+        } else {
+          setLoginError("Error: Empty response from server");
+        }
+      },
+      onError: (error) => {
+        setLoginError("Error: " + error.message);
+      },
+    })
+  );
 
   return (
     <div className={styles.page}>
@@ -60,6 +81,10 @@ export default function Login() {
             }
 
             if (!error) {
+              login.mutate({
+                username,
+                password,
+              });
             }
           }}>
           Submit

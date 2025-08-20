@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import bcrypt from "bcryptjs";
 import z from "zod";
 import { publicProcedure } from "../../trpc.ts";
+import { randomString } from "../../utils/randomString.ts";
 
 export const signup = publicProcedure
   .input(
@@ -17,14 +18,15 @@ export const signup = publicProcedure
     const passwordHash = await bcrypt.hash(opts.input.password, 10);
 
     const result = await opts.ctx.env.DB.prepare(
-      "INSERT INTO Users (username, password_hash, email, first_name, last_name) VALUES (?, ?, ?, ?, ?)"
+      "INSERT INTO Users (username, password_hash, email, first_name, last_name, token_secret) VALUES (?, ?, ?, ?, ?, ?)"
     )
       .bind(
         opts.input.username,
         passwordHash,
         opts.input.email,
         opts.input.firstName,
-        opts.input.lastName
+        opts.input.lastName,
+        randomString(32)
       )
       .run();
 
