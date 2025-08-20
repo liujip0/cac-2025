@@ -19,7 +19,11 @@ export default function TopBar() {
           className={linkStyles.inheritLink}>
           <Button className={styles.button}>Sign Up</Button>
         </Link>
-        <Button className={styles.button}>Login</Button>
+        <Link
+          to="/login"
+          className={linkStyles.inheritLink}>
+          <Button className={styles.button}>Login</Button>
+        </Link>
       </div>
     </div>
   );

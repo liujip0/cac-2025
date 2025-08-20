@@ -1,0 +1,38 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+
+  background-color: var(--color-background);
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 36px;
+  gap: 16px;
+}
+
+.title {
+  font-family: var(--text-font-family);
+  font-size: var(--text-h1-size);
+  margin-bottom: 16px;
+}
+
+.input {
+  width: 15em;
+}
+
+.submitButton {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+}
+
+.error {
+  color: var(--color-error);
+  font-size: var(--text-helperText-size);
+  font-family: var(--text-font-family);
+}
