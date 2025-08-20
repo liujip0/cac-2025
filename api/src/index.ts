@@ -12,6 +12,17 @@ export interface Env {
 
 export default {
   async fetch(request: Request, env: Env): Promise<Response> {
+    if (request.method === "OPTIONS") {
+      const responseHeaders = new Headers();
+      responseHeaders.set("Access-Control-Allow-Origin", "*");
+      responseHeaders.set("Access-Control-Allow-Headers", "*, Authorization");
+
+      return new Response(null, {
+        status: 204,
+        headers: responseHeaders,
+      });
+    }
+
     return fetchRequestHandler({
       endpoint: "/api",
       req: request,

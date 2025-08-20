@@ -25,3 +25,8 @@
 .input {
   width: 15em;
 }
+
+.submitButton {
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+}
