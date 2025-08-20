@@ -5,4 +5,4 @@ CREATE TABLE IF NOT EXISTS Users (
   email TEXT NOT NULL,
   first_name TEXT NOT NULL,
   last_name TEXT NOT NULL,
-)
+);
