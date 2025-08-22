@@ -12,13 +12,14 @@ export const signup = publicProcedure
       email: z.email(),
       firstName: z.string(),
       lastName: z.string(),
+      userType: z.enum(["admin", "student", "business", "parent", "teacher"]),
     })
   )
   .mutation(async (opts) => {
     const passwordHash = await bcrypt.hash(opts.input.password, 10);
 
     const result = await opts.ctx.env.DB.prepare(
-      "INSERT INTO Users (username, password_hash, email, first_name, last_name, token_secret) VALUES (?, ?, ?, ?, ?, ?)"
+      "INSERT INTO Users (username, password_hash, email, first_name, last_name, token_secret, user_type) VALUES (?, ?, ?, ?, ?, ?, ?)"
     )
       .bind(
         opts.input.username,
@@ -26,7 +27,8 @@ export const signup = publicProcedure
         opts.input.email,
         opts.input.firstName,
         opts.input.lastName,
-        randomString(32)
+        randomString(32),
+        opts.input.userType
       )
       .run();
 

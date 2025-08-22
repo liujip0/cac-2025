@@ -5,4 +5,5 @@ export type UsersRow = {
   first_name: string;
   last_name: string;
   token_secret: string;
+  user_type: "admin" | "student" | "business" | "parent" | "teacher";
 };

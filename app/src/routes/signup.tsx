@@ -1,4 +1,5 @@
-import { Button, Input, Password } from "@liujip0/components";
+import type { UsersRow } from "@cac-2025/api/src/dbtypes/Users.ts";
+import { Button, Input, Password, Select } from "@liujip0/components";
 import { skipToken, useMutation, useQuery } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
@@ -19,6 +20,7 @@ export default function Signup() {
     }
   };
 
+  const [userType, setUserType] = useState<UsersRow["user_type"]>("student");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -53,6 +55,19 @@ export default function Signup() {
       <TopBar />
       <div className={styles.content}>
         <h1 className={styles.title}>Sign Up</h1>
+        <Select
+          id="signup-user-type"
+          className={styles.input}
+          value={userType}
+          onChange={(value) => {
+            setUserType(value as UsersRow["user_type"]);
+          }}
+          label="Account Type">
+          <option value="student">Student</option>
+          <option value="business">Business/Mentor</option>
+          <option value="parent">Parent</option>
+          <option value="teacher">Teacher</option>
+        </Select>
         <Input
           id="signup-email"
           className={styles.input}
@@ -160,6 +175,7 @@ export default function Signup() {
                 email,
                 firstName,
                 lastName,
+                userType,
               });
             }
           }}>

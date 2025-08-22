@@ -31,7 +31,7 @@ export const authorizedProcedure = t.procedure.use(async (opts) => {
   }
 
   const user = await opts.ctx.env.DB.prepare(
-    "SELECT username, token_secret, email, first_name, last_name FROM Users WHERE username = ?"
+    "SELECT username, token_secret, email, first_name, last_name, user_type FROM Users WHERE username = ?"
   )
     .bind(validToken.username)
     .run<UsersRow>();
@@ -58,6 +58,7 @@ export const authorizedProcedure = t.procedure.use(async (opts) => {
         email: user.results[0].email,
         firstName: user.results[0].first_name,
         lastName: user.results[0].last_name,
+        userType: user.results[0].user_type,
       },
     },
   });

@@ -1,3 +1,4 @@
+import type { UsersRow } from "../../dbtypes/Users.ts";
 import { authorizedProcedure } from "../../trpc.ts";
 
 export type UserInfoResult = {
@@ -5,6 +6,7 @@ export type UserInfoResult = {
   email: string;
   firstName: string;
   lastName: string;
+  userType: UsersRow["user_type"];
 };
 
 export const userInfo = authorizedProcedure.query(
@@ -14,6 +16,7 @@ export const userInfo = authorizedProcedure.query(
       email: opts.ctx.user.email,
       firstName: opts.ctx.user.firstName,
       lastName: opts.ctx.user.lastName,
+      userType: opts.ctx.user.userType,
     };
   }
 );
