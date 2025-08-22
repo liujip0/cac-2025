@@ -1,3 +1,5 @@
+import type { UserInfoResult } from "@cac-2025/api/src/routes/users/userInfo.ts";
+import { Button } from "@liujip0/components";
 import { skipToken, useQuery } from "@tanstack/react-query";
 import Filters from "../components/Filters/Filters.tsx";
 import Internship from "../components/Internship/Internship.tsx";
@@ -16,13 +18,85 @@ export default function Index() {
     <div className={styles.page}>
       <TopBar user={userInfo.data} />
       <div className={styles.content}>
-        <Filters />
-        <div className={styles.feed}>
-          <Internship />
-          <Internship />
-          <Internship />
-        </div>
+        {userInfo.data ?
+          <Feed userInfo={userInfo.data} />
+        : <div>Welcome! Lorem ipsum something something</div>}
       </div>
     </div>
   );
+}
+
+type FeedProps = {
+  userInfo: UserInfoResult;
+};
+function Feed({ userInfo }: FeedProps) {
+  switch (userInfo.userType) {
+    case "student":
+      return (
+        <>
+          <Filters />
+          <div className={styles.feed}>
+            <Internship />
+            <Internship />
+            <Internship />
+          </div>
+        </>
+      );
+    case "business":
+      return (
+        <>
+          <Filters />
+          <div className={styles.feed}>
+            <div>
+              <Button>
+                <span className="material-symbols-outlined">add</span>
+                Create Internship
+              </Button>
+            </div>
+            <Internship />
+            <Internship />
+            <Internship />
+          </div>
+        </>
+      );
+    case "parent":
+      return (
+        <>
+          <Filters />
+          <div className={styles.feed}>
+            <Internship />
+            <Internship />
+            <Internship />
+          </div>
+        </>
+      );
+    case "teacher":
+      return (
+        <>
+          <Filters />
+          <div className={styles.feed}>
+            <Internship />
+            <Internship />
+            <Internship />
+          </div>
+        </>
+      );
+    case "admin":
+      return (
+        <>
+          <Filters />
+          <div className={styles.feed}>
+            <div>
+              <Button>
+                <span className="material-symbols-outlined">add</span>
+                Create Internship
+              </Button>
+            </div>
+            <Internship />
+            <Internship />
+            <Internship />
+          </div>
+        </>
+      );
+  }
 }

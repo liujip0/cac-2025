@@ -10,6 +10,8 @@
 .content {
   flex: 1;
   display: flex;
+
+  overflow-y: hidden;
 }
 
 .feed {
@@ -18,4 +20,6 @@
   flex-direction: column;
   padding: 32px;
   gap: 16px;
+
+  overflow-y: auto;
 }

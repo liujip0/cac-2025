@@ -30,30 +30,41 @@ export const login = publicProcedure
         .run<UsersRow>();
     }
 
-    if (user.success) {
-      if (user.results.length === 0) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Invalid username or password",
-        });
-      } else {
-        const passwordHash = user.results[0].password_hash;
-        const validPassword = await bcrypt.compare(
-          opts.input.password,
-          passwordHash
-        );
-        if (validPassword) {
-          return jwt.sign(
-            {
-              token_secret: user.results[0].token_secret,
-              username: user.results[0].username,
-            },
-            opts.ctx.env.JWT_SECRET_KEY,
-            {
-              expiresIn: "7d",
-            }
-          );
-        }
-      }
+    if (!user.success) {
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Failed to fetch user",
+      });
     }
+
+    if (user.results.length === 0) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Invalid username or password",
+      });
+    }
+
+    const passwordHash = user.results[0].password_hash;
+    const validPassword = await bcrypt.compare(
+      opts.input.password,
+      passwordHash
+    );
+
+    if (!validPassword) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "Invalid username or password",
+      });
+    }
+
+    return jwt.sign(
+      {
+        token_secret: user.results[0].token_secret,
+        username: user.results[0].username,
+      },
+      opts.ctx.env.JWT_SECRET_KEY,
+      {
+        expiresIn: "7d",
+      }
+    );
   });
