@@ -5,10 +5,18 @@ import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
 
 export const queryClient = new QueryClient();
 
+export const LOCAL_STORAGE_KEYS = {
+  apiToken: "api_token",
+};
+
 const trpcClient = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
       url: import.meta.env.VITE_SERVER_URL + "/api",
+      headers: () => ({
+        Authorization:
+          "Bearer " + localStorage.getItem(LOCAL_STORAGE_KEYS.apiToken) || "",
+      }),
     }),
   ],
 });

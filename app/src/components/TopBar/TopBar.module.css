@@ -13,7 +13,7 @@
   color: var(--color-primary-contrastText);
 }
 
-.buttons {
+.buttonsContainer {
   margin-left: auto;
   display: flex;
   gap: 16px;
@@ -22,4 +22,12 @@
 .button {
   background-color: var(--color-secondary);
   color: var(--color-secondary-contrastText);
+}
+
+.userText {
+  align-self: center;
+
+  font-family: var(--text-font-family);
+  color: var(--color-primary-contrastText);
+  font-size: var(--text-body-size);
 }

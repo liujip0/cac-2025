@@ -1,6 +1,6 @@
 import { Button, Input, Password } from "@liujip0/components";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import z from "zod";
 import TopBar from "../components/TopBar/TopBar.tsx";
@@ -9,6 +9,15 @@ import styles from "./signup.module.css";
 
 export default function Signup() {
   const navigate = useNavigate();
+
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const submitKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (event.key === "Enter") {
+      submitButtonRef.current?.click();
+    }
+  };
 
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -55,6 +64,7 @@ export default function Signup() {
           label="Email"
           error={emailError !== ""}
           helperText={emailError}
+          onKeyDown={submitKeyDown}
         />
         <Input
           id="signup-first-name"
@@ -66,6 +76,7 @@ export default function Signup() {
           label="First Name"
           error={firstNameError !== ""}
           helperText={firstNameError}
+          onKeyDown={submitKeyDown}
         />
         <Input
           id="signup-last-name"
@@ -77,6 +88,7 @@ export default function Signup() {
           label="Last Name"
           error={lastNameError !== ""}
           helperText={lastNameError}
+          onKeyDown={submitKeyDown}
         />
         <Input
           id="signup-username"
@@ -88,6 +100,7 @@ export default function Signup() {
           label="Username"
           error={!checkUsername.data?.ok}
           helperText={checkUsername.data?.ok ? "" : checkUsername.data.message}
+          onKeyDown={submitKeyDown}
         />
         <Password
           id="signup-password"
@@ -99,9 +112,11 @@ export default function Signup() {
           label="Password"
           error={passwordError !== ""}
           helperText={passwordError}
+          onKeyDown={submitKeyDown}
         />
         <Button
           className={styles.submitButton}
+          ref={submitButtonRef}
           onClick={async () => {
             let error = false;
             setSignupError("");

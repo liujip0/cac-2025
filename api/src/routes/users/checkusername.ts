@@ -13,7 +13,7 @@ type CheckUsernameResult =
 
 export const checkUsername = publicProcedure
   .input(z.string())
-  .query(async (opts) => {
+  .query(async (opts): Promise<CheckUsernameResult> => {
     if (opts.input.length < 3) {
       return {
         ok: false,

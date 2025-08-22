@@ -1,13 +1,22 @@
 import { Button, Input, Password } from "@liujip0/components";
 import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import TopBar from "../components/TopBar/TopBar.tsx";
-import { trpc } from "../trpc.ts";
+import { LOCAL_STORAGE_KEYS, trpc } from "../trpc.ts";
 import styles from "./login.module.css";
 
 export default function Login() {
   const navigate = useNavigate();
+
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
+  const submitKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (event.key === "Enter") {
+      submitButtonRef.current?.click();
+    }
+  };
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +30,7 @@ export default function Login() {
       onSuccess: (data) => {
         if (data) {
           setLoginError("");
-          localStorage.setItem("api_token", data);
+          localStorage.setItem(LOCAL_STORAGE_KEYS.apiToken, data);
           navigate("/");
         } else {
           setLoginError("Error: Empty response from server");
@@ -48,6 +57,7 @@ export default function Login() {
           label="Username or Email"
           error={usernameError !== ""}
           helperText={usernameError}
+          onKeyDown={submitKeyDown}
         />
         <Password
           id="login-password"
@@ -59,9 +69,11 @@ export default function Login() {
           label="Password"
           error={passwordError !== ""}
           helperText={passwordError}
+          onKeyDown={submitKeyDown}
         />
         <Button
           className={styles.submitButton}
+          ref={submitButtonRef}
           onClick={() => {
             let error = false;
             setLoginError("");
