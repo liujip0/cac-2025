@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import z from "zod";
 import { publicProcedure } from "../../trpc.ts";
 
-type CheckUsernameResult =
+export type CheckUsernameResult =
   | {
       ok: true;
     }

@@ -1,5 +1,5 @@
 import { Button, Input, Password } from "@liujip0/components";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { skipToken, useMutation, useQuery } from "@tanstack/react-query";
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import z from "zod";
@@ -26,7 +26,7 @@ export default function Signup() {
   const [password, setPassword] = useState("");
 
   const checkUsername = useQuery(
-    trpc.users.checkUsername.queryOptions(username, {
+    trpc.users.checkUsername.queryOptions(username ? username : skipToken, {
       initialData: { ok: true },
     })
   );
@@ -98,8 +98,8 @@ export default function Signup() {
             setUsername(value);
           }}
           label="Username"
-          error={!checkUsername.data?.ok}
-          helperText={checkUsername.data?.ok ? "" : checkUsername.data.message}
+          error={!checkUsername.data?.ok && checkUsername.data?.message !== ""}
+          helperText={checkUsername.data?.ok ? "" : checkUsername.data?.message}
           onKeyDown={submitKeyDown}
         />
         <Password
