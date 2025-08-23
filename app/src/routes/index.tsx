@@ -1,9 +1,11 @@
 import type { UserInfoResult } from "@cac-2025/api/src/routes/users/userInfo.ts";
 import { Button } from "@liujip0/components";
 import { skipToken, useQuery } from "@tanstack/react-query";
+import { Link } from "react-router";
 import Filters from "../components/Filters/Filters.tsx";
 import Internship from "../components/Internship/Internship.tsx";
 import TopBar from "../components/TopBar/TopBar.tsx";
+import linkStyles from "../components/styles/Link.module.css";
 import { LOCAL_STORAGE_KEYS, trpc } from "../trpc.ts";
 import styles from "./index.module.css";
 
@@ -48,10 +50,14 @@ function Feed({ userInfo }: FeedProps) {
           <Filters />
           <div className={styles.feed}>
             <div>
-              <Button>
-                <span className="material-symbols-outlined">add</span>
-                Create Internship
-              </Button>
+              <Link
+                to="/i/create"
+                className={linkStyles.inheritLink}>
+                <Button>
+                  <span className="material-symbols-outlined">add</span>
+                  Create Internship
+                </Button>
+              </Link>
             </div>
             <Internship />
             <Internship />

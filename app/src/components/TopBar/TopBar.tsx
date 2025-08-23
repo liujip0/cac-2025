@@ -27,6 +27,7 @@ export default function TopBar({ user }: TopBarProps) {
             className={styles.button}
             onClick={() => {
               localStorage.removeItem(LOCAL_STORAGE_KEYS.apiToken);
+              navigate("/");
               navigate(0);
             }}>
             Log Out
