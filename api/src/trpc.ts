@@ -53,6 +53,7 @@ export const authorizedProcedure = t.procedure.use(async (opts) => {
   return opts.next({
     ...opts,
     ctx: {
+      ...opts.ctx,
       user: {
         username: user.results[0].username,
         email: user.results[0].email,
