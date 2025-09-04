@@ -39,3 +39,10 @@
   font-size: var(--text-h2-size);
   margin-top: 8px;
 }
+
+.submitButton {
+  margin-top: 16px;
+
+  background-color: var(--color-primary);
+  color: var(--color-primary-contrastText);
+}

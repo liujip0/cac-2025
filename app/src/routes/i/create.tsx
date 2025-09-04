@@ -54,7 +54,7 @@ export default function CreateInternship() {
       description
     );
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.address, address);
-  });
+  }, [title, startDate, endDate, hours, description, address]);
 
   return (
     <div className={styles.page}>
@@ -126,7 +126,7 @@ export default function CreateInternship() {
               label="Hours"
             />
 
-            <Button>Submit</Button>
+            <Button className={styles.submitButton}>Submit</Button>
           </>
         )}
       </div>
