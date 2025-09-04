@@ -33,3 +33,9 @@
 .startEndDate {
   flex: 1;
 }
+
+.categoryHeading {
+  font-family: var(--text-font-family);
+  font-size: var(--text-h2-size);
+  margin-top: 8px;
+}

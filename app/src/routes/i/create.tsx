@@ -1,9 +1,22 @@
-import { Input, TextArea } from "@liujip0/components";
+import { Button, Input, TextArea } from "@liujip0/components";
 import { skipToken, useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import AddressInput, {
+  ADDRESS_INITIAL_VALUE,
+} from "../../components/AddressInput/AddressInput.tsx";
 import TopBar from "../../components/TopBar/TopBar.tsx";
 import { LOCAL_STORAGE_KEYS, trpc } from "../../trpc.ts";
 import styles from "./create.module.css";
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const CREATE_INTERNSHIP_STORAGE_KEYS = {
+  title: "create-internship-title",
+  startDate: "create-internship-start-date",
+  endDate: "create-internship-end-date",
+  hours: "create-internship-hours",
+  description: "create-internship-description",
+  address: "create-internship-address",
+};
 
 export default function CreateInternship() {
   const userInfo = useQuery(
@@ -12,11 +25,36 @@ export default function CreateInternship() {
     )
   );
 
-  const [title, setTitle] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [hours, setHours] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.title) ?? ""
+  );
+  const [startDate, setStartDate] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate) ?? ""
+  );
+  const [endDate, setEndDate] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate) ?? ""
+  );
+  const [hours, setHours] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.hours) ?? ""
+  );
+  const [description, setDescription] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.description) ?? ""
+  );
+  const [address, setAddress] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.address) ??
+      ADDRESS_INITIAL_VALUE.US
+  );
+  useEffect(() => {
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.title, title);
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate, startDate);
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate, endDate);
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.hours, hours);
+    localStorage.setItem(
+      CREATE_INTERNSHIP_STORAGE_KEYS.description,
+      description
+    );
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.address, address);
+  });
 
   return (
     <div className={styles.page}>
@@ -31,8 +69,32 @@ export default function CreateInternship() {
               onChange={(value) => {
                 setTitle(value);
               }}
-              label="Internship Title"
+              label="Title"
             />
+
+            <TextArea
+              id="create-internship-description"
+              className={styles.textarea}
+              value={description}
+              onChange={(value) => {
+                setDescription(value);
+              }}
+              rows={5}
+              label="Description"
+            />
+
+            <h2 className={styles.categoryHeading}>Internship Location</h2>
+            <AddressInput
+              id="create-internship-address"
+              value={address}
+              onChange={(value) => {
+                setAddress(value);
+              }}
+            />
+
+            <h2 className={styles.categoryHeading}>
+              Internship Duration & Timing
+            </h2>
             <div className={styles.startEndDateContainer}>
               <Input
                 id="create-internship-start-date"
@@ -61,20 +123,10 @@ export default function CreateInternship() {
               onChange={(value) => {
                 setHours(value);
               }}
-              //TODO: Come up with a better label
               label="Hours"
             />
 
-            <TextArea
-              id="create-internship-description"
-              className={styles.textarea}
-              value={description}
-              onChange={(value) => {
-                setDescription(value);
-              }}
-              rows={5}
-              label="Internship Description"
-            />
+            <Button>Submit</Button>
           </>
         )}
       </div>

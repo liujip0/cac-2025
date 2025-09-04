@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cityState {
+  width: 100%;
+  display: flex;
+  gap: 8px;
+}
+
+.city {
+  flex: 1;
+}
