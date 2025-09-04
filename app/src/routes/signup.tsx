@@ -1,12 +1,22 @@
 import type { UsersRow } from "@cac-2025/api/src/dbtypes/Users.ts";
 import { Button, Input, Password, Select } from "@liujip0/components";
 import { skipToken, useMutation, useQuery } from "@tanstack/react-query";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
 import z from "zod";
 import TopBar from "../components/TopBar/TopBar.tsx";
 import { trpc } from "../trpc.ts";
 import styles from "./signup.module.css";
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const SIGNUP_STORAGE_KEYS = {
+  userType: "signup-user-type",
+  email: "signup-email",
+  username: "signup-username",
+  firstName: "signup-first-name",
+  lastName: "signup-last-name",
+  password: "signup-password",
+};
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -20,12 +30,34 @@ export default function Signup() {
     }
   };
 
-  const [userType, setUserType] = useState<UsersRow["user_type"]>("student");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState<UsersRow["user_type"]>(
+    (localStorage.getItem(
+      SIGNUP_STORAGE_KEYS.userType
+    ) as UsersRow["user_type"]) ?? "student"
+  );
+  const [email, setEmail] = useState(
+    localStorage.getItem(SIGNUP_STORAGE_KEYS.email) ?? ""
+  );
+  const [username, setUsername] = useState(
+    localStorage.getItem(SIGNUP_STORAGE_KEYS.username) ?? ""
+  );
+  const [firstName, setFirstName] = useState(
+    localStorage.getItem(SIGNUP_STORAGE_KEYS.firstName) ?? ""
+  );
+  const [lastName, setLastName] = useState(
+    localStorage.getItem(SIGNUP_STORAGE_KEYS.lastName) ?? ""
+  );
+  const [password, setPassword] = useState(
+    localStorage.getItem(SIGNUP_STORAGE_KEYS.password) ?? ""
+  );
+  useEffect(() => {
+    localStorage.setItem(SIGNUP_STORAGE_KEYS.userType, userType);
+    localStorage.setItem(SIGNUP_STORAGE_KEYS.email, email);
+    localStorage.setItem(SIGNUP_STORAGE_KEYS.username, username);
+    localStorage.setItem(SIGNUP_STORAGE_KEYS.firstName, firstName);
+    localStorage.setItem(SIGNUP_STORAGE_KEYS.lastName, lastName);
+    localStorage.setItem(SIGNUP_STORAGE_KEYS.password, password);
+  }, [email, firstName, lastName, password, userType, username]);
 
   const checkUsername = useQuery(
     trpc.users.checkUsername.queryOptions(username ? username : skipToken, {
