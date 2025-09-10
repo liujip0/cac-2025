@@ -11,6 +11,6 @@ export default [
   route("login", "routes/login.tsx"),
   ...prefix("i", [
     route("create", "routes/i/create.tsx"),
-    route(":internshipId", "routes/i/viewinternship.tsx"),
+    route("view/:internshipId", "routes/i/view.tsx"),
   ]),
 ] satisfies RouteConfig;

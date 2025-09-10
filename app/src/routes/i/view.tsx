@@ -1,4 +1,4 @@
-import type { Route } from "./+types/viewinternship";
+import type { Route } from "./+types/view";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export async function clientLoader({ params }: Route.ClientLoaderArgs) {

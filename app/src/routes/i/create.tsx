@@ -1,5 +1,5 @@
 import { Button, Input, TextArea } from "@liujip0/components";
-import { skipToken, useQuery } from "@tanstack/react-query";
+import { skipToken, useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import AddressInput, {
   ADDRESS_INITIAL_VALUE,
@@ -23,6 +23,13 @@ export default function CreateInternship() {
     trpc.users.userInfo.queryOptions(
       localStorage.getItem(LOCAL_STORAGE_KEYS.apiToken) ? undefined : skipToken
     )
+  );
+
+  const createInternship = useMutation(
+    trpc.internships.createInternship.mutationOptions({
+      onSuccess(data) {},
+      onError(error) {},
+    })
   );
 
   const [title, setTitle] = useState(

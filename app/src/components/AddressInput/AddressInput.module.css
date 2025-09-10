@@ -11,5 +11,9 @@
 }
 
 .city {
+  flex: 5;
+}
+
+.stateZip {
   flex: 1;
 }
