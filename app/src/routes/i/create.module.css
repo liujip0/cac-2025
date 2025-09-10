@@ -46,3 +46,9 @@
   background-color: var(--color-primary);
   color: var(--color-primary-contrastText);
 }
+
+.submitError {
+  font-family: var(--text-font-family);
+  color: var(--color-error);
+  font-size: var(--text-helperText-size);
+}

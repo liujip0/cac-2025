@@ -73,6 +73,13 @@ export default function Signup() {
   const signup = useMutation(
     trpc.users.signup.mutationOptions({
       onSuccess: () => {
+        localStorage.removeItem(SIGNUP_STORAGE_KEYS.userType);
+        localStorage.removeItem(SIGNUP_STORAGE_KEYS.email);
+        localStorage.removeItem(SIGNUP_STORAGE_KEYS.username);
+        localStorage.removeItem(SIGNUP_STORAGE_KEYS.firstName);
+        localStorage.removeItem(SIGNUP_STORAGE_KEYS.lastName);
+        localStorage.removeItem(SIGNUP_STORAGE_KEYS.password);
+
         setSignupError("");
         navigate("/login");
       },

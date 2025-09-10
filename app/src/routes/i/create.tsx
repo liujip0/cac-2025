@@ -1,6 +1,7 @@
 import { Button, Input, TextArea } from "@liujip0/components";
 import { skipToken, useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import AddressInput, {
   ADDRESS_INITIAL_VALUE,
 } from "../../components/AddressInput/AddressInput.tsx";
@@ -19,22 +20,38 @@ export const CREATE_INTERNSHIP_STORAGE_KEYS = {
 };
 
 export default function CreateInternship() {
+  const navigate = useNavigate();
+
   const userInfo = useQuery(
     trpc.users.userInfo.queryOptions(
       localStorage.getItem(LOCAL_STORAGE_KEYS.apiToken) ? undefined : skipToken
     )
   );
 
+  const [submitError, setSubmitError] = useState("");
   const createInternship = useMutation(
     trpc.internships.createInternship.mutationOptions({
-      onSuccess(data) {},
-      onError(error) {},
+      onSuccess(data) {
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.title);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.hours);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.description);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.address);
+
+        setSubmitError("");
+        navigate(`/i/view/${data}`);
+      },
+      onError(error) {
+        setSubmitError("Error: " + error.message);
+      },
     })
   );
 
   const [title, setTitle] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.title) ?? ""
   );
+  const [titleError, setTitleError] = useState("");
   const [startDate, setStartDate] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate) ?? ""
   );
@@ -47,6 +64,7 @@ export default function CreateInternship() {
   const [description, setDescription] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.description) ?? ""
   );
+  const [descriptionError, setDescriptionError] = useState("");
   const [address, setAddress] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.address) ??
       ADDRESS_INITIAL_VALUE.US
@@ -77,6 +95,8 @@ export default function CreateInternship() {
                 setTitle(value);
               }}
               label="Title"
+              error={titleError !== ""}
+              helperText={titleError}
             />
 
             <TextArea
@@ -88,6 +108,8 @@ export default function CreateInternship() {
               }}
               rows={5}
               label="Description"
+              error={descriptionError !== ""}
+              helperText={descriptionError}
             />
 
             <h2 className={styles.categoryHeading}>Internship Location</h2>
@@ -133,7 +155,35 @@ export default function CreateInternship() {
               label="Hours"
             />
 
-            <Button className={styles.submitButton}>Submit</Button>
+            <Button
+              className={styles.submitButton}
+              onClick={() => {
+                let error = false;
+                if (title === "") {
+                  setTitleError("Title is required");
+                  error = true;
+                }
+
+                if (description === "") {
+                  setDescriptionError("Description is required");
+                  error = true;
+                }
+
+                if (error) {
+                  return;
+                }
+                createInternship.mutate({
+                  title,
+                  startDate,
+                  endDate,
+                  hours,
+                  description,
+                  address,
+                });
+              }}>
+              Submit
+            </Button>
+            <p className={styles.submitError}>{submitError}</p>
           </>
         )}
       </div>
