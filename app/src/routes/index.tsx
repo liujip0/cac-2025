@@ -21,41 +21,24 @@ export default function Index() {
       <TopBar user={userInfo.data} />
       <div className={styles.content}>
         {userInfo.data ?
-          <Feed userInfo={userInfo.data} />
+          <MainContent userInfo={userInfo.data} />
         : <div>Welcome! Lorem ipsum something something</div>}
       </div>
     </div>
   );
 }
 
-type FeedProps = {
+type MainContentProps = {
   userInfo: UserInfoResult;
 };
-function Feed({ userInfo }: FeedProps) {
-  const internshipsList = useQuery(
-    trpc.internships.internshipList.queryOptions({
-      start: 0,
-      limit: 10,
-    })
-  );
-
+function MainContent({ userInfo }: MainContentProps) {
   switch (userInfo.userType) {
     case "student":
       return (
         <>
           <Filters />
           <div className={styles.feed}>
-            {internshipsList.data?.map((internship) => (
-              <Internship
-                key={internship.id}
-                title={internship.title}
-                description={internship.description}
-                startDate={internship.start_date}
-                endDate={internship.end_date}
-                hours={internship.hours}
-                address={internship.address}
-              />
-            ))}
+            <InternshipsList />
           </div>
         </>
       );
@@ -74,9 +57,7 @@ function Feed({ userInfo }: FeedProps) {
                 </Button>
               </Link>
             </div>
-            {/* <Internship />
-            <Internship />
-            <Internship /> */}
+            <InternshipsList />
           </div>
         </>
       );
@@ -85,9 +66,7 @@ function Feed({ userInfo }: FeedProps) {
         <>
           <Filters />
           <div className={styles.feed}>
-            {/* <Internship />
-            <Internship />
-            <Internship /> */}
+            <InternshipsList />
           </div>
         </>
       );
@@ -96,9 +75,7 @@ function Feed({ userInfo }: FeedProps) {
         <>
           <Filters />
           <div className={styles.feed}>
-            {/* <Internship />
-            <Internship />
-            <Internship /> */}
+            <InternshipsList />
           </div>
         </>
       );
@@ -120,4 +97,33 @@ function Feed({ userInfo }: FeedProps) {
         </>
       );
   }
+}
+
+function InternshipsList() {
+  const internshipsList = useQuery(
+    trpc.internships.internshipList.queryOptions({
+      start: 0,
+      limit: 10,
+    })
+  );
+
+  return (
+    <>
+      {internshipsList.data?.map((internship) => (
+        <Link
+          key={internship.id}
+          to={`/i/view/${internship.id}`}
+          className={linkStyles.inheritLink}>
+          <Internship
+            title={internship.title}
+            description={internship.description}
+            startDate={internship.start_date}
+            endDate={internship.end_date}
+            hours={internship.hours}
+            address={internship.address}
+          />
+        </Link>
+      ))}
+    </>
+  );
 }

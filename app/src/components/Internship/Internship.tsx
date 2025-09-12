@@ -13,6 +13,7 @@ type InternshipProps = {
   endDate?: string;
   hours?: string;
   address?: string;
+  className?: string;
 };
 export default function Internship({
   title,
@@ -21,6 +22,7 @@ export default function Internship({
   endDate,
   hours,
   address,
+  className,
 }: InternshipProps) {
   const mediaQuery = window.matchMedia("(max-width: 700px)");
   const [narrowScreen, setNarrowScreen] = useState(mediaQuery.matches);
@@ -39,7 +41,14 @@ export default function Internship({
   const splitAddress = address?.split(ADDRESS_FIELD_SEPARATOR);
 
   return narrowScreen ?
-      <div className={styles.internship + " " + styles.internshipNarrow}>
+      <div
+        className={
+          styles.internship +
+          " " +
+          styles.internshipNarrow +
+          " " +
+          (className || "")
+        }>
         <h2 className={styles.title}>{title}</h2>
         <div className={styles.imageContainerNarrow}>
           <img
@@ -68,7 +77,7 @@ export default function Internship({
         </div>
         <div className={styles.imageContainer}>
           <img
-            className={styles.image}
+            className={styles.image + " " + styles.imageWide}
             src={import.meta.env.BASE_URL + "Example.jpg"}
           />
         </div>
