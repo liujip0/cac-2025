@@ -102,8 +102,15 @@ type QuickInfoProps = {
   endDate?: Date;
   hours?: string;
   address?: string[];
+  fullAddress?: boolean;
 };
-function QuickInfo({ startDate, endDate, hours, address }: QuickInfoProps) {
+export function QuickInfo({
+  startDate,
+  endDate,
+  hours,
+  address,
+  fullAddress = false,
+}: QuickInfoProps) {
   return (
     <div className={styles.quickInfo}>
       {startDate && endDate && (
@@ -123,20 +130,32 @@ function QuickInfo({ startDate, endDate, hours, address }: QuickInfoProps) {
         </InfoChip>
       )}
       {address &&
-        (address[0] === ADDRESS_TYPES.VIRTUAL ||
-          (address[0] === ADDRESS_TYPES.US && address[3] && address[4])) && (
+        (fullAddress ?
           <InfoChip
             icon={
               <span className="material-symbols-outlined">location_on</span>
             }>
             {
               {
-                US: address[3] + ", " + address[4],
-                VIRTUAL: "Virtual",
+                [ADDRESS_TYPES.US]: address.slice(1).join(", "),
+                [ADDRESS_TYPES.VIRTUAL]: <a href={address[1]}>{address[1]}</a>,
               }[address[0]]
             }
           </InfoChip>
-        )}
+        : (address[0] === ADDRESS_TYPES.VIRTUAL ||
+            (address[0] === ADDRESS_TYPES.US && address[3] && address[4])) && (
+            <InfoChip
+              icon={
+                <span className="material-symbols-outlined">location_on</span>
+              }>
+              {
+                {
+                  [ADDRESS_TYPES.US]: address[3] + ", " + address[4],
+                  [ADDRESS_TYPES.VIRTUAL]: "Virtual",
+                }[address[0]]
+              }
+            </InfoChip>
+          ))}
       {hours && (
         <InfoChip
           icon={<span className="material-symbols-outlined">schedule</span>}>

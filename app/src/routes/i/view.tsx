@@ -1,4 +1,6 @@
 import { skipToken, useQuery } from "@tanstack/react-query";
+import { ADDRESS_FIELD_SEPARATOR } from "../../components/AddressInput/AddressInput.tsx";
+import { QuickInfo } from "../../components/Internship/Internship.tsx";
 import TopBar from "../../components/TopBar/TopBar.tsx";
 import { LOCAL_STORAGE_KEYS, trpc } from "../../trpc.ts";
 import type { Route } from "./+types/view";
@@ -21,19 +23,43 @@ export default function ViewInternship({ params }: Route.ComponentProps) {
     })
   );
 
+  const parsedStartDate =
+    getInternship.data?.start_date && new Date(getInternship.data.start_date);
+  const parsedEndDate =
+    getInternship.data?.end_date && new Date(getInternship.data.end_date);
+  const splitAddress = getInternship.data?.address?.split(
+    ADDRESS_FIELD_SEPARATOR
+  );
+
   return (
     <div className={styles.page}>
       <TopBar user={userInfo.data} />
       <div className={styles.content}>
         <div className={styles.internship}>
-          {getInternship.data && (
+          {getInternship.data ?
             <>
               <h1 className={styles.title}>{getInternship.data.title}</h1>
+              <div className={styles.imageContainer}>
+                <img
+                  className={styles.image}
+                  src={import.meta.env.BASE_URL + "Example.jpg"}
+                />
+              </div>
+              <QuickInfo
+                startDate={parsedStartDate || undefined}
+                endDate={parsedEndDate || undefined}
+                hours={getInternship.data.hours}
+                address={splitAddress}
+                fullAddress
+              />
               <p className={styles.description}>
                 {getInternship.data.description}
               </p>
             </>
-          )}
+          : <>
+              <div>Loading info...</div>
+            </>
+          }
         </div>
       </div>
     </div>
