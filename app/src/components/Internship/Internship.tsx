@@ -128,18 +128,12 @@ function QuickInfo({ startDate, endDate, hours, address }: QuickInfoProps) {
             }
           </InfoChip>
         )}
-      <InfoChip
-        icon={<span className="material-symbols-outlined">schedule</span>}>
-        Full-time
-      </InfoChip>
-      <InfoChip
-        icon={<span className="material-symbols-outlined">attach_money</span>}>
-        $10/hr
-      </InfoChip>
-      <InfoChip
-        icon={<span className="material-symbols-outlined">school</span>}>
-        High School
-      </InfoChip>
+      {hours && (
+        <InfoChip
+          icon={<span className="material-symbols-outlined">schedule</span>}>
+          {hours}
+        </InfoChip>
+      )}
     </div>
   );
 }
