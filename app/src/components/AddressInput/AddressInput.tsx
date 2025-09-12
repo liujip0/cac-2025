@@ -3,10 +3,16 @@ import styles from "./AddressInput.module.css";
 
 export const ADDRESS_FIELD_SEPARATOR = "|||";
 // eslint-disable-next-line react-refresh/only-export-components
-export const ADDRESS_INITIAL_VALUE = {
-  US: "US" + ADDRESS_FIELD_SEPARATOR.repeat(5),
-  VIRTUAL: "VIRTUAL" + ADDRESS_FIELD_SEPARATOR,
-};
+export const ADDRESS_TYPES = {
+  US: "US",
+  VIRTUAL: "VIRTUAL",
+} as const;
+// eslint-disable-next-line react-refresh/only-export-components
+export const ADDRESS_INITIAL_VALUE: Record<keyof typeof ADDRESS_TYPES, string> =
+  {
+    US: ADDRESS_TYPES.US + ADDRESS_FIELD_SEPARATOR.repeat(5),
+    VIRTUAL: ADDRESS_TYPES.VIRTUAL + ADDRESS_FIELD_SEPARATOR,
+  };
 
 type AddressInputProps = {
   id: string;
@@ -24,7 +30,7 @@ export default function AddressInput({
     <div className={styles.container}>
       <Checkbox
         id={id + "-virtual"}
-        value={splitAddress[0] === "VIRTUAL"}
+        value={splitAddress[0] === ADDRESS_TYPES.VIRTUAL}
         onChange={(value) => {
           onChange?.(
             value ? ADDRESS_INITIAL_VALUE.VIRTUAL : ADDRESS_INITIAL_VALUE.US

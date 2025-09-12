@@ -32,15 +32,30 @@ type FeedProps = {
   userInfo: UserInfoResult;
 };
 function Feed({ userInfo }: FeedProps) {
+  const internshipsList = useQuery(
+    trpc.internships.internshipList.queryOptions({
+      start: 0,
+      limit: 10,
+    })
+  );
+
   switch (userInfo.userType) {
     case "student":
       return (
         <>
           <Filters />
           <div className={styles.feed}>
-            <Internship />
-            <Internship />
-            <Internship />
+            {internshipsList.data?.map((internship) => (
+              <Internship
+                key={internship.id}
+                title={internship.title}
+                description={internship.description}
+                startDate={internship.start_date}
+                endDate={internship.end_date}
+                hours={internship.hours}
+                address={internship.address}
+              />
+            ))}
           </div>
         </>
       );
@@ -59,9 +74,9 @@ function Feed({ userInfo }: FeedProps) {
                 </Button>
               </Link>
             </div>
+            {/* <Internship />
             <Internship />
-            <Internship />
-            <Internship />
+            <Internship /> */}
           </div>
         </>
       );
@@ -70,9 +85,9 @@ function Feed({ userInfo }: FeedProps) {
         <>
           <Filters />
           <div className={styles.feed}>
+            {/* <Internship />
             <Internship />
-            <Internship />
-            <Internship />
+            <Internship /> */}
           </div>
         </>
       );
@@ -81,9 +96,9 @@ function Feed({ userInfo }: FeedProps) {
         <>
           <Filters />
           <div className={styles.feed}>
+            {/* <Internship />
             <Internship />
-            <Internship />
-            <Internship />
+            <Internship /> */}
           </div>
         </>
       );
@@ -98,9 +113,9 @@ function Feed({ userInfo }: FeedProps) {
                 Create Internship
               </Button>
             </div>
+            {/* <Internship />
             <Internship />
-            <Internship />
-            <Internship />
+            <Internship /> */}
           </div>
         </>
       );

@@ -1,8 +1,27 @@
 import type React from "react";
 import { useEffect, useState } from "react";
+import {
+  ADDRESS_FIELD_SEPARATOR,
+  ADDRESS_TYPES,
+} from "../AddressInput/AddressInput.tsx";
 import styles from "./Internship.module.css";
 
-export default function Internship() {
+type InternshipProps = {
+  title: string;
+  description: string;
+  startDate?: string;
+  endDate?: string;
+  hours?: string;
+  address?: string;
+};
+export default function Internship({
+  title,
+  description,
+  startDate,
+  endDate,
+  hours,
+  address,
+}: InternshipProps) {
   const mediaQuery = window.matchMedia("(max-width: 700px)");
   const [narrowScreen, setNarrowScreen] = useState(mediaQuery.matches);
   useEffect(() => {
@@ -15,97 +34,37 @@ export default function Internship() {
     };
   });
 
+  const parsedStartDate = startDate && new Date(startDate);
+  const parsedEndDate = endDate && new Date(endDate);
+  const splitAddress = address?.split(ADDRESS_FIELD_SEPARATOR);
+
   return narrowScreen ?
       <div className={styles.internship + " " + styles.internshipNarrow}>
-        <h2 className={styles.title}>Some Internship</h2>
+        <h2 className={styles.title}>{title}</h2>
         <div className={styles.imageContainerNarrow}>
           <img
             className={styles.image + " " + styles.imageNarrow}
             src={import.meta.env.BASE_URL + "Example.jpg"}
           />
         </div>
-        <div className={styles.quickInfo}>
-          <InfoChip
-            icon={
-              <span className="material-symbols-outlined">calendar_month</span>
-            }>
-            May 2024 - Aug 2024
-          </InfoChip>
-          <InfoChip
-            icon={
-              <span className="material-symbols-outlined">location_on</span>
-            }>
-            Remote
-          </InfoChip>
-          <InfoChip
-            icon={<span className="material-symbols-outlined">schedule</span>}>
-            Full-time
-          </InfoChip>
-          <InfoChip
-            icon={
-              <span className="material-symbols-outlined">attach_money</span>
-            }>
-            $10/hr
-          </InfoChip>
-          <InfoChip
-            icon={<span className="material-symbols-outlined">school</span>}>
-            High School
-          </InfoChip>
-        </div>
-        <p className={styles.description}>
-          Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-          faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi
-          pretium tellus duis convallis. Tempus leo eu aenean sed diam urna
-          tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-          Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-          hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent
-          per conubia nostra inceptos himenaeos.
-        </p>
+        <QuickInfo
+          startDate={parsedStartDate || undefined}
+          endDate={parsedEndDate || undefined}
+          hours={hours}
+          address={splitAddress}
+        />
+        <p className={styles.description}>{description}</p>
       </div>
     : <div className={styles.internship}>
         <div className={styles.internshipInfo}>
-          <h2 className={styles.title}>Some Internship</h2>
-          <div className={styles.quickInfo}>
-            <InfoChip
-              icon={
-                <span className="material-symbols-outlined">
-                  calendar_month
-                </span>
-              }>
-              May 2024 - Aug 2024
-            </InfoChip>
-            <InfoChip
-              icon={
-                <span className="material-symbols-outlined">location_on</span>
-              }>
-              Remote
-            </InfoChip>
-            <InfoChip
-              icon={
-                <span className="material-symbols-outlined">schedule</span>
-              }>
-              Full-time
-            </InfoChip>
-            <InfoChip
-              icon={
-                <span className="material-symbols-outlined">attach_money</span>
-              }>
-              $10/hr
-            </InfoChip>
-            <InfoChip
-              icon={<span className="material-symbols-outlined">school</span>}>
-              High School
-            </InfoChip>
-          </div>
-          <p className={styles.description}>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-            faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi
-            pretium tellus duis convallis. Tempus leo eu aenean sed diam urna
-            tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.
-            Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-            hendrerit semper vel class aptent taciti sociosqu. Ad litora
-            torquent per conubia nostra inceptos himenaeos.
-          </p>
+          <h2 className={styles.title}>{title}</h2>
+          <QuickInfo
+            startDate={parsedStartDate || undefined}
+            endDate={parsedEndDate || undefined}
+            hours={hours}
+            address={splitAddress}
+          />
+          <p className={styles.description}>{description}</p>
         </div>
         <div className={styles.imageContainer}>
           <img
@@ -125,6 +84,62 @@ function InfoChip({ icon, children }: InfoChipProps) {
     <div className={styles.infoChip}>
       {icon}
       {children}
+    </div>
+  );
+}
+
+type QuickInfoProps = {
+  startDate?: Date;
+  endDate?: Date;
+  hours?: string;
+  address?: string[];
+};
+function QuickInfo({ startDate, endDate, hours, address }: QuickInfoProps) {
+  return (
+    <div className={styles.quickInfo}>
+      {startDate && endDate && (
+        <InfoChip
+          icon={
+            <span className="material-symbols-outlined">calendar_month</span>
+          }>
+          {startDate.toLocaleDateString("en-US", {
+            month: "short",
+            year: "numeric",
+          })}
+          {" - "}
+          {endDate.toLocaleDateString("en-US", {
+            month: "short",
+            year: "numeric",
+          })}
+        </InfoChip>
+      )}
+      {address &&
+        (address[0] === ADDRESS_TYPES.VIRTUAL ||
+          (address[0] === ADDRESS_TYPES.US && address[3] && address[4])) && (
+          <InfoChip
+            icon={
+              <span className="material-symbols-outlined">location_on</span>
+            }>
+            {
+              {
+                US: address[3] + ", " + address[4],
+                VIRTUAL: "Virtual",
+              }[address[0]]
+            }
+          </InfoChip>
+        )}
+      <InfoChip
+        icon={<span className="material-symbols-outlined">schedule</span>}>
+        Full-time
+      </InfoChip>
+      <InfoChip
+        icon={<span className="material-symbols-outlined">attach_money</span>}>
+        $10/hr
+      </InfoChip>
+      <InfoChip
+        icon={<span className="material-symbols-outlined">school</span>}>
+        High School
+      </InfoChip>
     </div>
   );
 }
