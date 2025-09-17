@@ -153,7 +153,11 @@ export default function Signup() {
           }}
           label="Username"
           error={!checkUsername.data?.ok && checkUsername.data?.message !== ""}
-          helperText={checkUsername.data?.ok ? "" : checkUsername.data?.message}
+          helperText={
+            "This is what will be shown to other users.\n" +
+            (checkUsername.data?.ok ? "" : checkUsername.data?.message)
+          }
+          helperTextClassName={styles.helperText}
           onKeyDown={submitKeyDown}
         />
         <Password

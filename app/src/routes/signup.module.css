@@ -36,3 +36,7 @@
   font-size: var(--text-helperText-size);
   font-family: var(--text-font-family);
 }
+
+.helperText {
+  color: var(--color-background-contrastText);
+}
