@@ -8,7 +8,8 @@
     "app:dev": "cd app && pnpm dev",
     "api:dev": "cd api && pnpm dev",
     "create-environment": "cp app/.env.local.example app/.env.local && cp api/.dev.vars.example api/.dev.vars",
-    "create-environment-windows": "cd app && copy .env.local.example .env.local && cd ../api && copy .dev.vars.example .dev.vars"
+    "create-environment-windows": "cd app && copy .env.local.example .env.local && cd ../api && copy .dev.vars.example .dev.vars",
+    "migrations": "cd api && pnpm wrangler d1 migrations"
   },
   "keywords": [],
   "author": "",

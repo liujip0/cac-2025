@@ -14,7 +14,8 @@ export const CREATE_INTERNSHIP_STORAGE_KEYS = {
   title: "create-internship-title",
   startDate: "create-internship-start-date",
   endDate: "create-internship-end-date",
-  hours: "create-internship-hours",
+  startTime: "create-internship-start-time",
+  endTime: "create-internship-end-time",
   description: "create-internship-description",
   address: "create-internship-address",
 };
@@ -35,7 +36,8 @@ export default function CreateInternship() {
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.title);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate);
-        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.hours);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.startTime);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.endTime);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.description);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.address);
 
@@ -58,8 +60,11 @@ export default function CreateInternship() {
   const [endDate, setEndDate] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate) ?? ""
   );
-  const [hours, setHours] = useState(
-    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.hours) ?? ""
+  const [startTime, setStartTime] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.startTime) ?? ""
+  );
+  const [endTime, setEndTime] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.endTime) ?? ""
   );
   const [description, setDescription] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.description) ?? ""
@@ -73,13 +78,14 @@ export default function CreateInternship() {
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.title, title);
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate, startDate);
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate, endDate);
-    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.hours, hours);
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.startTime, startTime);
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.endTime, endTime);
     localStorage.setItem(
       CREATE_INTERNSHIP_STORAGE_KEYS.description,
       description
     );
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.address, address);
-  }, [title, startDate, endDate, hours, description, address]);
+  }, [title, startDate, endDate, startTime, endTime, description, address]);
 
   return (
     <div className={styles.page}>
@@ -146,14 +152,28 @@ export default function CreateInternship() {
                 label="End Date"
               />
             </div>
-            <Input
-              id="create-internship-hours"
-              value={hours}
-              onChange={(value) => {
-                setHours(value);
-              }}
-              label="Hours"
-            />
+            <div className={styles.startEndDateContainer}>
+              <Input
+                id="create-internship-start-time"
+                className={styles.startEndDate}
+                type="time"
+                value={startTime}
+                onChange={(value) => {
+                  setStartTime(value);
+                }}
+                label="Typical Daily Start Time"
+              />
+              <Input
+                id="create-internship-end-time"
+                className={styles.startEndDate}
+                type="time"
+                value={endTime}
+                onChange={(value) => {
+                  setEndTime(value);
+                }}
+                label="Typical Daily End Time"
+              />
+            </div>
 
             <Button
               className={styles.submitButton}
@@ -176,7 +196,8 @@ export default function CreateInternship() {
                   title,
                   startDate,
                   endDate,
-                  hours,
+                  startTime,
+                  endTime,
                   description,
                   address,
                 });

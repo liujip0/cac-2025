@@ -90,9 +90,7 @@ function MainContent({ userInfo }: MainContentProps) {
                 Create Internship
               </Button>
             </div>
-            {/* <Internship />
-            <Internship />
-            <Internship /> */}
+            <InternshipsList />
           </div>
         </>
       );
@@ -119,7 +117,11 @@ function InternshipsList() {
             description={internship.description}
             startDate={internship.start_date}
             endDate={internship.end_date}
-            hours={internship.hours}
+            hours={
+              internship.start_time && internship.end_time ?
+                `${internship.start_time} - ${internship.end_time}`
+              : ""
+            }
             address={internship.address}
           />
         </Link>

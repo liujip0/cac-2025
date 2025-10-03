@@ -3,7 +3,8 @@ export type InternshipsRow = {
   title: string;
   start_date?: string;
   end_date?: string;
-  hours?: string;
+  start_time?: string;
+  end_time?: string;
   description: string;
   address?: string;
   business: string;
