@@ -9,16 +9,16 @@ export const createInternship = authorizedProcedure
       title: z.string(),
       startDate: z.string(),
       endDate: z.string(),
-      startTime: z.string(),
-      endTime: z.string(),
+      weeklyHours: z.number().min(0).max(168),
       description: z.string(),
       address: z.string(),
+      hourlyPay: z.number().min(0),
     })
   )
   .mutation(async (opts) => {
     const results = await opts.ctx.env.DB.prepare(
       `INSERT INTO Internships
-        (title, start_date, end_date, start_time, end_time, description, address, business)
+        (title, start_date, end_date, weekly_hours, description, address, business, hourly_pay)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       RETURNING *;`
     )
@@ -26,11 +26,11 @@ export const createInternship = authorizedProcedure
         opts.input.title,
         opts.input.startDate,
         opts.input.endDate,
-        opts.input.startTime,
-        opts.input.endTime,
+        opts.input.weeklyHours,
         opts.input.description,
         opts.input.address,
-        opts.ctx.user.username
+        opts.ctx.user.username,
+        opts.input.hourlyPay
       )
       .run<InternshipsRow>();
 

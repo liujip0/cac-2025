@@ -11,9 +11,10 @@ type InternshipProps = {
   description: string;
   startDate?: string;
   endDate?: string;
-  hours?: string;
+  hours?: number;
   address?: string;
   className?: string;
+  hourlyPay?: number;
 };
 export default function Internship({
   title,
@@ -23,6 +24,7 @@ export default function Internship({
   hours,
   address,
   className,
+  hourlyPay,
 }: InternshipProps) {
   const mediaQuery = window.matchMedia("(max-width: 700px)");
   const [narrowScreen, setNarrowScreen] = useState(mediaQuery.matches);
@@ -72,6 +74,7 @@ export default function Internship({
             endDate={parsedEndDate || undefined}
             hours={hours}
             address={splitAddress}
+            hourlyPay={hourlyPay}
           />
           <p className={styles.description}>{description}</p>
         </div>
@@ -100,9 +103,10 @@ function InfoChip({ icon, children }: InfoChipProps) {
 type QuickInfoProps = {
   startDate?: Date;
   endDate?: Date;
-  hours?: string;
+  hours?: number;
   address?: string[];
   fullAddress?: boolean;
+  hourlyPay?: number;
 };
 export function QuickInfo({
   startDate,
@@ -110,6 +114,7 @@ export function QuickInfo({
   hours,
   address,
   fullAddress = false,
+  hourlyPay,
 }: QuickInfoProps) {
   return (
     <div className={styles.quickInfo}>
@@ -159,7 +164,15 @@ export function QuickInfo({
       {hours && (
         <InfoChip
           icon={<span className="material-symbols-outlined">schedule</span>}>
-          {hours}
+          {hours} hrs/wk
+        </InfoChip>
+      )}
+      {hourlyPay && (
+        <InfoChip
+          icon={
+            <span className="material-symbols-outlined">attach_money</span>
+          }>
+          ${hourlyPay.toFixed(2)} / hr
         </InfoChip>
       )}
     </div>

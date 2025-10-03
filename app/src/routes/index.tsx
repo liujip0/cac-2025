@@ -117,11 +117,7 @@ function InternshipsList() {
             description={internship.description}
             startDate={internship.start_date}
             endDate={internship.end_date}
-            hours={
-              internship.start_time && internship.end_time ?
-                `${internship.start_time} - ${internship.end_time}`
-              : ""
-            }
+            hours={internship.weekly_hours}
             address={internship.address}
           />
         </Link>

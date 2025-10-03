@@ -3,9 +3,9 @@ export type InternshipsRow = {
   title: string;
   start_date?: string;
   end_date?: string;
-  start_time?: string;
-  end_time?: string;
+  weekly_hours?: number;
   description: string;
   address?: string;
   business: string;
+  hourly_pay?: number;
 };

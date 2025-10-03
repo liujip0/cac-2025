@@ -14,10 +14,10 @@ export const CREATE_INTERNSHIP_STORAGE_KEYS = {
   title: "create-internship-title",
   startDate: "create-internship-start-date",
   endDate: "create-internship-end-date",
-  startTime: "create-internship-start-time",
-  endTime: "create-internship-end-time",
+  weeklyHours: "create-internship-weekly-hours",
   description: "create-internship-description",
   address: "create-internship-address",
+  hourlyPay: "create-internship-hourly-pay",
 };
 
 export default function CreateInternship() {
@@ -36,10 +36,10 @@ export default function CreateInternship() {
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.title);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate);
-        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.startTime);
-        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.endTime);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHours);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.description);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.address);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.hourlyPay);
 
         setSubmitError("");
         navigate(`/i/view/${data}`);
@@ -60,12 +60,10 @@ export default function CreateInternship() {
   const [endDate, setEndDate] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate) ?? ""
   );
-  const [startTime, setStartTime] = useState(
-    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.startTime) ?? ""
+  const [weeklyHours, setWeeklyHours] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHours) ?? "0"
   );
-  const [endTime, setEndTime] = useState(
-    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.endTime) ?? ""
-  );
+  const [weeklyHoursError, setWeeklyHoursError] = useState("");
   const [description, setDescription] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.description) ?? ""
   );
@@ -74,18 +72,25 @@ export default function CreateInternship() {
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.address) ??
       ADDRESS_INITIAL_VALUE.US
   );
+  const [hourlyPay, setHourlyPay] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.hourlyPay) ?? "0.00"
+  );
+  const [hourlyPayError, setHourlyPayError] = useState("");
   useEffect(() => {
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.title, title);
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate, startDate);
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate, endDate);
-    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.startTime, startTime);
-    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.endTime, endTime);
+    localStorage.setItem(
+      CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHours,
+      weeklyHours
+    );
     localStorage.setItem(
       CREATE_INTERNSHIP_STORAGE_KEYS.description,
       description
     );
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.address, address);
-  }, [title, startDate, endDate, startTime, endTime, description, address]);
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.hourlyPay, hourlyPay);
+  }, [title, startDate, endDate, description, address, hourlyPay, weeklyHours]);
 
   return (
     <div className={styles.page}>
@@ -152,28 +157,31 @@ export default function CreateInternship() {
                 label="End Date"
               />
             </div>
-            <div className={styles.startEndDateContainer}>
-              <Input
-                id="create-internship-start-time"
-                className={styles.startEndDate}
-                type="time"
-                value={startTime}
-                onChange={(value) => {
-                  setStartTime(value);
-                }}
-                label="Typical Daily Start Time"
-              />
-              <Input
-                id="create-internship-end-time"
-                className={styles.startEndDate}
-                type="time"
-                value={endTime}
-                onChange={(value) => {
-                  setEndTime(value);
-                }}
-                label="Typical Daily End Time"
-              />
-            </div>
+            <Input
+              id="create-internship-weekly-hours"
+              type="number"
+              value={weeklyHours}
+              onChange={(value) => {
+                setWeeklyHours(value);
+              }}
+              label="Weekly Hours"
+              min={0}
+              error={weeklyHoursError !== ""}
+              helperText={weeklyHoursError}
+            />
+            <Input
+              id="create-internship-hourly-pay"
+              type="number"
+              value={hourlyPay}
+              onChange={(value) => {
+                setHourlyPay(value);
+              }}
+              min={0}
+              label="Hourly Pay"
+              startIcon={"$"}
+              error={hourlyPayError !== ""}
+              helperText={hourlyPayError}
+            />
 
             <Button
               className={styles.submitButton}
@@ -182,11 +190,38 @@ export default function CreateInternship() {
                 if (title === "") {
                   setTitleError("Title is required");
                   error = true;
+                } else {
+                  setTitleError("");
                 }
 
                 if (description === "") {
                   setDescriptionError("Description is required");
                   error = true;
+                } else {
+                  setDescriptionError("");
+                }
+
+                if (hourlyPay === "" || isNaN(parseFloat(hourlyPay))) {
+                  setHourlyPayError("Hourly pay must be a valid number");
+                  error = true;
+                } else if (parseFloat(hourlyPay) < 0) {
+                  setHourlyPayError("Hourly pay cannot be negative");
+                  error = true;
+                } else {
+                  setHourlyPayError("");
+                }
+
+                if (weeklyHours === "" || isNaN(parseFloat(weeklyHours))) {
+                  setWeeklyHoursError("Weekly hours must be a valid number");
+                  error = true;
+                } else if (parseFloat(weeklyHours) < 0) {
+                  setWeeklyHoursError("Weekly hours cannot be negative");
+                  error = true;
+                } else if (parseFloat(weeklyHours) > 168) {
+                  setWeeklyHoursError("Weekly hours cannot exceed 168");
+                  error = true;
+                } else {
+                  setWeeklyHoursError("");
                 }
 
                 if (error) {
@@ -196,10 +231,10 @@ export default function CreateInternship() {
                   title,
                   startDate,
                   endDate,
-                  startTime,
-                  endTime,
+                  weeklyHours: parseFloat(weeklyHours),
                   description,
                   address,
+                  hourlyPay: parseFloat(hourlyPay),
                 });
               }}>
               Submit
