@@ -18,6 +18,7 @@ const handler = (request: Request, env: Env): Promise<Response> => {
     responseHeaders.set("Access-Control-Allow-Origin", "*");
     responseHeaders.set("Access-Control-Allow-Headers", "*, Authorization");
     responseHeaders.set("Access-Control-Allow-Methods", "*");
+    responseHeaders.set("Allow", "GET, POST, OPTIONS");
 
     return Promise.resolve(
       new Response(null, {

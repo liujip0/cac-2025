@@ -15,6 +15,7 @@ export const createContext = async ({
     "*, Content-Type, Authorization"
   );
   responseHeaders.set("Access-Control-Allow-Methods", "*");
+  responseHeaders.set("Allow", "GET, POST, OPTIONS");
 
   return {
     req,
