@@ -18,6 +18,7 @@ export default {
       const responseHeaders = new Headers();
       responseHeaders.set("Access-Control-Allow-Origin", "*");
       responseHeaders.set("Access-Control-Allow-Headers", "*, Authorization");
+      responseHeaders.set("Access-Control-Allow-Methods", "*");
 
       return new Response(null, {
         status: 204,
