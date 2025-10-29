@@ -56,6 +56,24 @@ export default function ViewInternship({ params }: Route.ComponentProps) {
                 fullAddress
                 hourlyPay={getInternship.data.hourly_pay || undefined}
               />
+              {getInternship.data.website_url && (
+                <p className={styles.description}>
+                  <strong>Website:</strong>{" "}
+                  <a
+                    href={getInternship.data.website_url}
+                    target="_blank">
+                    {getInternship.data.website_url}
+                  </a>
+                </p>
+              )}
+              {getInternship.data.email && (
+                <p className={styles.description}>
+                  <strong>Contact Email:</strong>{" "}
+                  <a href={`mailto:${getInternship.data.email}`}>
+                    {getInternship.data.email}
+                  </a>
+                </p>
+              )}
               <p className={styles.description}>
                 {getInternship.data.description}
               </p>

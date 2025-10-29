@@ -170,6 +170,7 @@ export function QuickInfo({
         </InfoChip>
       )}
       {address &&
+        address.filter((x) => x !== "").length > 0 &&
         (fullAddress ?
           <InfoChip
             icon={
@@ -177,8 +178,17 @@ export function QuickInfo({
             }>
             {
               {
-                [ADDRESS_TYPES.US]: address.slice(1).join(", "),
-                [ADDRESS_TYPES.VIRTUAL]: <a href={address[1]}>{address[1]}</a>,
+                [ADDRESS_TYPES.US]: address
+                  .slice(1)
+                  .filter((x) => x !== "")
+                  .join(", "),
+                [ADDRESS_TYPES.VIRTUAL]: (
+                  <a
+                    href={address[1]}
+                    target="_blank">
+                    {address[1]}
+                  </a>
+                ),
               }[address[0]]
             }
           </InfoChip>
