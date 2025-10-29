@@ -35,7 +35,7 @@ export default function Index() {
             </p>
             <p className={styles.welcomeText}>
               You are viewing the instance of the app for the{" "}
-              <strong>Bloomington</strong> area.
+              <strong>Bloomington, Indiana</strong> area.
             </p>
             <p className={styles.welcomeText}>
               To get started, please log in or sign up using the buttons in the
