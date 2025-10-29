@@ -13,6 +13,10 @@ export default function TopBar({ user }: TopBarProps) {
 
   return (
     <div className={styles.topBar}>
+      <img
+        className={styles.logo}
+        src={import.meta.env.BASE_URL + "logo.png"}
+      />
       <h1 className={styles.title}>
         <Link
           to="/"

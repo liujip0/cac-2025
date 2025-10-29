@@ -7,6 +7,12 @@
   background-color: var(--color-primary);
 }
 
+.logo {
+  height: 4em;
+  aspect-ratio: 574 / 527;
+  margin-right: 1.5em;
+}
+
 .title {
   font-family: var(--text-font-family);
   font-size: var(--text-h1-size);

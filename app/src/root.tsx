@@ -30,8 +30,7 @@ export const links: LinksFunction = () => {
   return [
     {
       rel: "icon",
-      // TODO: Replace
-      href: import.meta.env.BASE_URL + "vite.svg", // ! Replace
+      href: import.meta.env.BASE_URL + "logo.png",
     },
   ];
 };

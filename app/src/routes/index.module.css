@@ -42,7 +42,7 @@
   font-size: var(--text-h1-size);
   font-family: var(--text-font-family);
   color: var(--color-background-contrastText);
-  background-color: var(--color-secondary);
+  background-color: #aa9dcc;
   border-radius: var(--border-radius);
 }
 
@@ -54,6 +54,6 @@
   font-size: var(--text-body-size);
   font-family: var(--text-font-family);
   color: var(--color-background-contrastText);
-  background-color: var(--color-secondary);
+  background-color: #aa9dcc;
   border-radius: var(--border-radius);
 }
