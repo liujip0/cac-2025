@@ -8,9 +8,26 @@ export const internshipList = authorizedProcedure
     z.object({
       start: z.number().int().nonnegative().default(0),
       limit: z.number().int().positive().max(100).default(20),
+      paid: z.boolean(),
+      unpaid: z.boolean(),
+      industry: z.string().optional(),
     })
   )
   .query(async (opts) => {
+    const filters = [];
+
+    if (opts.input.paid && !opts.input.unpaid) {
+      filters.push("hourly_pay IS NOT NULL AND hourly_pay > 0");
+    } else if (!opts.input.paid && opts.input.unpaid) {
+      filters.push("hourly_pay IS NULL OR hourly_pay = 0");
+    } else if (!opts.input.paid && !opts.input.unpaid) {
+      filters.push("1 = 0");
+    }
+
+    if (opts.input.industry) {
+      filters.push(`industry = '${opts.input.industry}'`);
+    }
+
     const results = await opts.ctx.env.DB.prepare(
       `SELECT
         id,
@@ -27,7 +44,10 @@ export const internshipList = authorizedProcedure
         age_max,
         address,
         hourly_pay
-      FROM Internships
+      FROM Internships` +
+        (filters.length > 0 ? " WHERE " : "") +
+        filters.join(" AND ") +
+        `
       ORDER BY hourly_pay DESC
       LIMIT ? OFFSET ?;`
     )

@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   align-self: stretch;
-  padding: 24px 16px;
-  margin: 8px;
+  padding: 24px 16px 24px 12px;
+  margin: 6px 8px;
 
   background-color: var(--color-secondary);
   border-radius: var(--border-radius);
@@ -13,4 +13,16 @@
   font-family: var(--text-font-family);
   font-size: var(--text-h2-size);
   color: var(--color-secondary-contrastText);
+}
+
+.subtitle {
+  margin-top: 12px;
+
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+  color: var(--color-secondary-contrastText);
+}
+
+.checkbox {
+  background-color: transparent;
 }

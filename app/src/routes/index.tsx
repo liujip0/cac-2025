@@ -1,6 +1,7 @@
 import type { UserInfoResult } from "@cac-2025/api/src/routes/users/userInfo.ts";
 import { Button } from "@liujip0/components";
 import { skipToken, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { Link } from "react-router";
 import Filters from "../components/Filters/Filters.tsx";
 import Internship from "../components/Internship/Internship.tsx";
@@ -51,20 +52,43 @@ type MainContentProps = {
   userInfo: UserInfoResult;
 };
 function MainContent({ userInfo }: MainContentProps) {
+  const [paid, setPaid] = useState(true);
+  const [unpaid, setUnpaid] = useState(true);
+
+  const [industry, setIndustry] = useState<string>("All");
+
   switch (userInfo.userType) {
     case "student":
       return (
         <>
-          <Filters />
+          <Filters
+            paid={paid}
+            setPaid={setPaid}
+            unpaid={unpaid}
+            setUnpaid={setUnpaid}
+            industry={industry}
+            setIndustry={setIndustry}
+          />
           <div className={styles.feed}>
-            <InternshipsList />
+            <InternshipsList
+              paid={paid}
+              unpaid={unpaid}
+              industry={industry}
+            />
           </div>
         </>
       );
     case "business":
       return (
         <>
-          <Filters />
+          <Filters
+            paid={paid}
+            setPaid={setPaid}
+            unpaid={unpaid}
+            setUnpaid={setUnpaid}
+            industry={industry}
+            setIndustry={setIndustry}
+          />
           <div className={styles.feed}>
             <div>
               <Link
@@ -76,32 +100,65 @@ function MainContent({ userInfo }: MainContentProps) {
                 </Button>
               </Link>
             </div>
-            <InternshipsList />
+            <InternshipsList
+              paid={paid}
+              unpaid={unpaid}
+              industry={industry}
+            />
           </div>
         </>
       );
     case "parent":
       return (
         <>
-          <Filters />
+          <Filters
+            paid={paid}
+            setPaid={setPaid}
+            unpaid={unpaid}
+            setUnpaid={setUnpaid}
+            industry={industry}
+            setIndustry={setIndustry}
+          />
           <div className={styles.feed}>
-            <InternshipsList />
+            <InternshipsList
+              paid={paid}
+              unpaid={unpaid}
+              industry={industry}
+            />
           </div>
         </>
       );
     case "teacher":
       return (
         <>
-          <Filters />
+          <Filters
+            paid={paid}
+            setPaid={setPaid}
+            unpaid={unpaid}
+            setUnpaid={setUnpaid}
+            industry={industry}
+            setIndustry={setIndustry}
+          />
           <div className={styles.feed}>
-            <InternshipsList />
+            <InternshipsList
+              paid={paid}
+              unpaid={unpaid}
+              industry={industry}
+            />
           </div>
         </>
       );
     case "admin":
       return (
         <>
-          <Filters />
+          <Filters
+            paid={paid}
+            setPaid={setPaid}
+            unpaid={unpaid}
+            setUnpaid={setUnpaid}
+            industry={industry}
+            setIndustry={setIndustry}
+          />
           <div className={styles.feed}>
             <div>
               <Button>
@@ -109,18 +166,36 @@ function MainContent({ userInfo }: MainContentProps) {
                 Create Internship
               </Button>
             </div>
-            <InternshipsList />
+            <InternshipsList
+              paid={paid}
+              unpaid={unpaid}
+              industry={industry}
+            />
           </div>
         </>
       );
   }
 }
 
-function InternshipsList() {
+type InternshipsListProps = {
+  paid: boolean;
+  unpaid: boolean;
+
+  industry: string;
+};
+function InternshipsList({
+  paid,
+  unpaid,
+
+  industry,
+}: InternshipsListProps) {
   const internshipsList = useQuery(
     trpc.internships.internshipList.queryOptions({
       start: 0,
       limit: 10,
+      paid,
+      unpaid,
+      industry: industry === "All" ? "" : industry,
     })
   );
 
