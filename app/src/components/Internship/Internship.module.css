@@ -75,6 +75,7 @@ img.imageNarrow {
   background-color: var(--color-primary);
   font-family: var(--text-font-family);
   font-size: var(--text-label-size);
+  color: var(--color-primary-contrastText);
 }
 
 .infoChip > span {

@@ -23,10 +23,6 @@ export default function ViewInternship({ params }: Route.ComponentProps) {
     })
   );
 
-  const parsedStartDate =
-    getInternship.data?.start_date && new Date(getInternship.data.start_date);
-  const parsedEndDate =
-    getInternship.data?.end_date && new Date(getInternship.data.end_date);
   const splitAddress = getInternship.data?.address?.split(
     ADDRESS_FIELD_SEPARATOR
   );
@@ -40,18 +36,25 @@ export default function ViewInternship({ params }: Route.ComponentProps) {
             <>
               <h1 className={styles.title}>{getInternship.data.title}</h1>
               <div className={styles.imageContainer}>
-                <img
+                {/* <img
                   className={styles.image}
                   src={import.meta.env.BASE_URL + "Example.jpg"}
-                />
+                /> */}
               </div>
               <QuickInfo
-                startDate={parsedStartDate || undefined}
-                endDate={parsedEndDate || undefined}
-                weeklyHours={getInternship.data.weekly_hours || undefined}
+                industry={getInternship.data.industry || undefined}
+                lengthWeeks={getInternship.data.length_weeks || undefined}
+                weeklyHoursLow={
+                  getInternship.data.weekly_hours_low || undefined
+                }
+                weeklyHoursHigh={
+                  getInternship.data.weekly_hours_high || undefined
+                }
+                ageMin={getInternship.data.age_min || undefined}
+                ageMax={getInternship.data.age_max || undefined}
                 address={splitAddress}
                 fullAddress
-                hourlyPay={getInternship.data.hourly_pay}
+                hourlyPay={getInternship.data.hourly_pay || undefined}
               />
               <p className={styles.description}>
                 {getInternship.data.description}

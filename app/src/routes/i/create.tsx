@@ -12,10 +12,15 @@ import styles from "./create.module.css";
 // eslint-disable-next-line react-refresh/only-export-components
 export const CREATE_INTERNSHIP_STORAGE_KEYS = {
   title: "create-internship-title",
-  startDate: "create-internship-start-date",
-  endDate: "create-internship-end-date",
-  weeklyHours: "create-internship-weekly-hours",
+  websiteUrl: "create-internship-website-url",
+  email: "create-internship-email",
   description: "create-internship-description",
+  industry: "create-internship-industry",
+  lengthWeeks: "create-internship-length-weeks",
+  weeklyHoursLow: "create-internship-weekly-hours-low",
+  weeklyHoursHigh: "create-internship-weekly-hours-high",
+  ageMin: "create-internship-age-min",
+  ageMax: "create-internship-age-max",
   address: "create-internship-address",
   hourlyPay: "create-internship-hourly-pay",
 };
@@ -34,10 +39,15 @@ export default function CreateInternship() {
     trpc.internships.createInternship.mutationOptions({
       onSuccess(data) {
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.title);
-        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate);
-        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate);
-        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHours);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.websiteUrl);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.email);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.description);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.industry);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.lengthWeeks);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHoursLow);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHoursHigh);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.ageMin);
+        localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.ageMax);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.address);
         localStorage.removeItem(CREATE_INTERNSHIP_STORAGE_KEYS.hourlyPay);
 
@@ -54,20 +64,34 @@ export default function CreateInternship() {
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.title) ?? ""
   );
   const [titleError, setTitleError] = useState("");
-  const [startDate, setStartDate] = useState(
-    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate) ?? ""
+  const [websiteUrl, setWebsiteUrl] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.websiteUrl) ?? ""
   );
-  const [endDate, setEndDate] = useState(
-    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate) ?? ""
+  const [email, setEmail] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.email) ?? ""
   );
-  const [weeklyHours, setWeeklyHours] = useState(
-    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHours) ?? "0"
-  );
-  const [weeklyHoursError, setWeeklyHoursError] = useState("");
   const [description, setDescription] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.description) ?? ""
   );
   const [descriptionError, setDescriptionError] = useState("");
+  const [industry, setIndustry] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.industry) ?? ""
+  );
+  const [lengthWeeks, setLengthWeeks] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.lengthWeeks) ?? ""
+  );
+  const [weeklyHoursLow, setWeeklyHoursLow] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHoursLow) ?? ""
+  );
+  const [weeklyHoursHigh, setWeeklyHoursHigh] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHoursHigh) ?? ""
+  );
+  const [ageMin, setAgeMin] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.ageMin) ?? ""
+  );
+  const [ageMax, setAgeMax] = useState(
+    localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.ageMax) ?? ""
+  );
   const [address, setAddress] = useState(
     localStorage.getItem(CREATE_INTERNSHIP_STORAGE_KEYS.address) ??
       ADDRESS_INITIAL_VALUE.US
@@ -78,19 +102,43 @@ export default function CreateInternship() {
   const [hourlyPayError, setHourlyPayError] = useState("");
   useEffect(() => {
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.title, title);
-    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.startDate, startDate);
-    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.endDate, endDate);
-    localStorage.setItem(
-      CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHours,
-      weeklyHours
-    );
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.websiteUrl, websiteUrl);
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.email, email);
     localStorage.setItem(
       CREATE_INTERNSHIP_STORAGE_KEYS.description,
       description
     );
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.industry, industry);
+    localStorage.setItem(
+      CREATE_INTERNSHIP_STORAGE_KEYS.lengthWeeks,
+      lengthWeeks
+    );
+    localStorage.setItem(
+      CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHoursLow,
+      weeklyHoursLow
+    );
+    localStorage.setItem(
+      CREATE_INTERNSHIP_STORAGE_KEYS.weeklyHoursHigh,
+      weeklyHoursHigh
+    );
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.ageMin, ageMin);
+    localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.ageMax, ageMax);
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.address, address);
     localStorage.setItem(CREATE_INTERNSHIP_STORAGE_KEYS.hourlyPay, hourlyPay);
-  }, [title, startDate, endDate, description, address, hourlyPay, weeklyHours]);
+  }, [
+    address,
+    ageMax,
+    ageMin,
+    description,
+    email,
+    hourlyPay,
+    industry,
+    lengthWeeks,
+    title,
+    websiteUrl,
+    weeklyHoursHigh,
+    weeklyHoursLow,
+  ]);
 
   return (
     <div className={styles.page}>
@@ -108,6 +156,68 @@ export default function CreateInternship() {
               label="Title"
               error={titleError !== ""}
               helperText={titleError}
+            />
+
+            <Input
+              id="create-internship-website-url"
+              value={websiteUrl}
+              onChange={(value) => {
+                setWebsiteUrl(value);
+              }}
+              label="Website URL"
+            />
+
+            <Input
+              id="create-internship-email"
+              value={email}
+              onChange={(value) => {
+                setEmail(value);
+              }}
+              label="Contact Email"
+            />
+
+            <Input
+              id="create-internship-industry"
+              value={industry}
+              onChange={(value) => {
+                setIndustry(value);
+              }}
+              label="Industry / Topic"
+            />
+
+            <div className={styles.startEndDateContainer}>
+              <Input
+                id="create-internship-age-min"
+                className={styles.startEndDate}
+                value={ageMin}
+                onChange={(value) => {
+                  setAgeMin(value);
+                }}
+                label="Min. Age"
+              />
+              <Input
+                id="create-internship-age-max"
+                className={styles.startEndDate}
+                value={ageMax}
+                onChange={(value) => {
+                  setAgeMax(value);
+                }}
+                label="Max. Age"
+              />
+            </div>
+
+            <Input
+              id="create-internship-hourly-pay"
+              type="number"
+              value={hourlyPay}
+              onChange={(value) => {
+                setHourlyPay(value);
+              }}
+              min={0}
+              label="Hourly Pay"
+              startIcon={"$"}
+              error={hourlyPayError !== ""}
+              helperText={hourlyPayError}
             />
 
             <TextArea
@@ -135,53 +245,37 @@ export default function CreateInternship() {
             <h2 className={styles.categoryHeading}>
               Internship Duration & Timing
             </h2>
+
+            <Input
+              id="create-internship-length-weeks"
+              value={lengthWeeks}
+              onChange={(value) => {
+                setLengthWeeks(value);
+              }}
+              label="Length (weeks)"
+            />
+
             <div className={styles.startEndDateContainer}>
               <Input
-                id="create-internship-start-date"
+                id="create-internship-weekly-hours-low"
                 className={styles.startEndDate}
-                type="date"
-                value={startDate}
+                value={weeklyHoursLow}
                 onChange={(value) => {
-                  setStartDate(value);
+                  setWeeklyHoursLow(value);
                 }}
-                label="Start Date"
+                label="Weekly Hours"
               />
+              <div className={styles.startEndDateText}> to </div>
               <Input
-                id="create-internship-end-date"
+                id="create-internship-weekly-hours-high"
                 className={styles.startEndDate}
-                type="date"
-                value={endDate}
+                value={weeklyHoursHigh}
                 onChange={(value) => {
-                  setEndDate(value);
+                  setWeeklyHoursHigh(value);
                 }}
-                label="End Date"
+                label="_"
               />
             </div>
-            <Input
-              id="create-internship-weekly-hours"
-              type="number"
-              value={weeklyHours}
-              onChange={(value) => {
-                setWeeklyHours(value);
-              }}
-              label="Weekly Hours"
-              min={0}
-              error={weeklyHoursError !== ""}
-              helperText={weeklyHoursError}
-            />
-            <Input
-              id="create-internship-hourly-pay"
-              type="number"
-              value={hourlyPay}
-              onChange={(value) => {
-                setHourlyPay(value);
-              }}
-              min={0}
-              label="Hourly Pay"
-              startIcon={"$"}
-              error={hourlyPayError !== ""}
-              helperText={hourlyPayError}
-            />
 
             <Button
               className={styles.submitButton}
@@ -211,28 +305,23 @@ export default function CreateInternship() {
                   setHourlyPayError("");
                 }
 
-                if (weeklyHours === "" || isNaN(parseFloat(weeklyHours))) {
-                  setWeeklyHoursError("Weekly hours must be a valid number");
-                  error = true;
-                } else if (parseFloat(weeklyHours) < 0) {
-                  setWeeklyHoursError("Weekly hours cannot be negative");
-                  error = true;
-                } else if (parseFloat(weeklyHours) > 168) {
-                  setWeeklyHoursError("Weekly hours cannot exceed 168");
-                  error = true;
-                } else {
-                  setWeeklyHoursError("");
-                }
-
                 if (error) {
                   return;
                 }
                 createInternship.mutate({
                   title,
-                  startDate,
-                  endDate,
-                  weeklyHours: parseFloat(weeklyHours),
+                  websiteUrl: websiteUrl === "" ? null : websiteUrl,
+                  email: email === "" ? null : email,
                   description,
+                  industry: industry === "" ? null : industry,
+                  lengthWeeks:
+                    lengthWeeks === "" ? null : parseInt(lengthWeeks),
+                  weeklyHoursLow:
+                    weeklyHoursLow === "" ? null : parseInt(weeklyHoursLow),
+                  weeklyHoursHigh:
+                    weeklyHoursHigh === "" ? null : parseInt(weeklyHoursHigh),
+                  ageMin: ageMin === "" ? null : parseInt(ageMin),
+                  ageMax: ageMax === "" ? null : parseInt(ageMax),
                   address,
                   hourlyPay: parseFloat(hourlyPay),
                 });

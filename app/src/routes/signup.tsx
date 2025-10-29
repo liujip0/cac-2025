@@ -3,7 +3,6 @@ import { Button, Input, Password, Select } from "@liujip0/components";
 import { skipToken, useMutation, useQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router";
-import z from "zod";
 import TopBar from "../components/TopBar/TopBar.tsx";
 import { trpc } from "../trpc.ts";
 import styles from "./signup.module.css";
@@ -64,9 +63,6 @@ export default function Signup() {
       initialData: { ok: true },
     })
   );
-  const [emailError, setEmailError] = useState("");
-  const [firstNameError, setFirstNameError] = useState("");
-  const [lastNameError, setLastNameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   const [signupError, setSignupError] = useState("");
@@ -116,8 +112,6 @@ export default function Signup() {
           }}
           type="email"
           label="Email"
-          error={emailError !== ""}
-          helperText={emailError}
           onKeyDown={submitKeyDown}
         />
         <Input
@@ -128,8 +122,6 @@ export default function Signup() {
             setFirstName(value);
           }}
           label="First Name"
-          error={firstNameError !== ""}
-          helperText={firstNameError}
           onKeyDown={submitKeyDown}
         />
         <Input
@@ -140,8 +132,6 @@ export default function Signup() {
             setLastName(value);
           }}
           label="Last Name"
-          error={lastNameError !== ""}
-          helperText={lastNameError}
           onKeyDown={submitKeyDown}
         />
         <Input
@@ -182,27 +172,6 @@ export default function Signup() {
 
             if (!checkUsername.data?.ok) {
               error = false;
-            }
-            if (email.length === 0) {
-              setEmailError("Email is required");
-              error = true;
-            } else if (!z.email().safeParse(email).success) {
-              setEmailError("Invalid email address");
-              error = true;
-            } else {
-              setEmailError("");
-            }
-            if (firstName.length === 0) {
-              setFirstNameError("First name is required");
-              error = true;
-            } else {
-              setFirstNameError("");
-            }
-            if (lastName.length === 0) {
-              setLastNameError("Last name is required");
-              error = true;
-            } else {
-              setLastNameError("");
             }
             if (password.length < 6) {
               setPasswordError("Password must be at least 6 characters long");

@@ -134,14 +134,14 @@ function InternshipsList() {
           <Internship
             title={internship.title}
             description={internship.description}
-            industry={internship.industry}
-            lengthWeeks={internship.length_weeks}
-            weeklyHoursLow={internship.weekly_hours_low}
-            weeklyHoursHigh={internship.weekly_hours_high}
-            ageMin={internship.age_min}
-            ageMax={internship.age_max}
-            address={internship.address}
-            hourlyPay={internship.hourly_pay}
+            industry={internship.industry || undefined}
+            lengthWeeks={internship.length_weeks || undefined}
+            weeklyHoursLow={internship.weekly_hours_low || undefined}
+            weeklyHoursHigh={internship.weekly_hours_high || undefined}
+            ageMin={internship.age_min || undefined}
+            ageMax={internship.age_max || undefined}
+            address={internship.address || undefined}
+            hourlyPay={internship.hourly_pay || undefined}
           />
         </Link>
       ))}

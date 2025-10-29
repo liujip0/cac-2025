@@ -61,10 +61,10 @@ export default function Internship({
         }>
         <h2 className={styles.title}>{title}</h2>
         <div className={styles.imageContainerNarrow}>
-          <img
+          {/* <img
             className={styles.image + " " + styles.imageNarrow}
             src={import.meta.env.BASE_URL + "Example.jpg"}
-          />
+          /> */}
         </div>
         <QuickInfo
           industry={industry}

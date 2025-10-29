@@ -28,7 +28,7 @@ export const internshipList = authorizedProcedure
         address,
         hourly_pay
       FROM Internships
-      ORDER BY start_date DESC
+      ORDER BY hourly_pay DESC
       LIMIT ? OFFSET ?;`
     )
       .bind(opts.input.limit, opts.input.start)

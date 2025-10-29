@@ -12,34 +12,28 @@ export interface Env {
   JWT_SECRET_KEY: string;
 }
 
-const handler = (request: Request, env: Env): Promise<Response> => {
-  if (request.method === "OPTIONS") {
-    const responseHeaders = new Headers();
-    responseHeaders.set("Access-Control-Allow-Origin", "*");
-    responseHeaders.set("Access-Control-Allow-Headers", "*, Authorization");
-    responseHeaders.set("Access-Control-Allow-Methods", "*");
-    responseHeaders.set("Allow", "GET, POST, OPTIONS");
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    if (request.method === "OPTIONS") {
+      const response = new Response(null, {
+        status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Headers": "*",
+        },
+      });
+      return response;
+    }
 
-    return Promise.resolve(
-      new Response(null, {
-        status: 204,
-        headers: responseHeaders,
-      })
-    );
-  }
-
-  return fetchRequestHandler({
-    endpoint: "/api",
-    req: request,
-    router: appRouter,
-    createContext: (options: FetchCreateContextFnOptions) =>
-      createContext({
-        ...options,
-        env,
-      }),
-  });
+    return fetchRequestHandler({
+      endpoint: "/api",
+      req: request,
+      router: appRouter,
+      createContext: (options: FetchCreateContextFnOptions) =>
+        createContext({
+          ...options,
+          env,
+        }),
+    });
+  },
 };
-
-export const POST = handler;
-export const GET = handler;
-export const OPTIONS = handler;

@@ -16,7 +16,7 @@
   --color-secondary-contrastText: black; /* default: white */
   --color-background: #f9f9f9; /* default: white */
   --color-background-contrastText: black; /* default: black */
-  --color-paper: lightgray; /* default: gray */
+  --color-paper: #a6daea; /* default: gray */
   --color-paper-contrastText: black; /* default: black */
   --color-error: var(--color-error-fallback); /* default: red */
 

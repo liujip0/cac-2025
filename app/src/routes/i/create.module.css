@@ -34,6 +34,14 @@
   flex: 1;
 }
 
+.startEndDateText {
+  align-self: flex-end;
+  margin-bottom: 12px;
+
+  font-family: var(--text-font-family);
+  font-size: var(--text-body-size);
+}
+
 .categoryHeading {
   font-family: var(--text-font-family);
   font-size: var(--text-h2-size);

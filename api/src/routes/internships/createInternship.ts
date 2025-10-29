@@ -7,17 +7,17 @@ export const createInternship = authorizedProcedure
   .input(
     z.object({
       title: z.string(),
-      websiteUrl: z.string(),
-      email: z.string(),
+      websiteUrl: z.string().nullable(),
+      email: z.string().nullable(),
       description: z.string(),
-      industry: z.string(),
-      lengthWeeks: z.number().int().positive(),
-      weeklyHoursLow: z.number().min(0).max(168),
-      weeklyHoursHigh: z.number().min(0).max(168),
-      ageMin: z.number().int().nonnegative(),
-      ageMax: z.number().int().nonnegative(),
+      industry: z.string().nullable(),
+      lengthWeeks: z.number().int().positive().nullable(),
+      weeklyHoursLow: z.number().min(0).max(168).nullable(),
+      weeklyHoursHigh: z.number().min(0).max(168).nullable(),
+      ageMin: z.number().int().nonnegative().nullable(),
+      ageMax: z.number().int().nonnegative().nullable(),
       address: z.string(),
-      hourlyPay: z.number().min(0),
+      hourlyPay: z.number().min(0).nullable(),
     })
   )
   .mutation(async (opts) => {
