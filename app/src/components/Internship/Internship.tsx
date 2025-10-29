@@ -9,22 +9,32 @@ import styles from "./Internship.module.css";
 type InternshipProps = {
   title: string;
   description: string;
-  startDate?: string;
-  endDate?: string;
-  hours?: number;
+
+  industry?: string;
+  lengthWeeks?: number;
+  weeklyHoursLow?: number;
+  weeklyHoursHigh?: number;
+  ageMin?: number;
+  ageMax?: number;
   address?: string;
-  className?: string;
   hourlyPay?: number;
+
+  className?: string;
 };
 export default function Internship({
   title,
   description,
-  startDate,
-  endDate,
-  hours,
+
+  industry,
+  lengthWeeks,
+  weeklyHoursLow,
+  weeklyHoursHigh,
+  ageMin,
+  ageMax,
   address,
-  className,
   hourlyPay,
+
+  className,
 }: InternshipProps) {
   const mediaQuery = window.matchMedia("(max-width: 700px)");
   const [narrowScreen, setNarrowScreen] = useState(mediaQuery.matches);
@@ -38,8 +48,6 @@ export default function Internship({
     };
   });
 
-  const parsedStartDate = startDate && new Date(startDate);
-  const parsedEndDate = endDate && new Date(endDate);
   const splitAddress = address?.split(ADDRESS_FIELD_SEPARATOR);
 
   return narrowScreen ?
@@ -59,10 +67,14 @@ export default function Internship({
           />
         </div>
         <QuickInfo
-          startDate={parsedStartDate || undefined}
-          endDate={parsedEndDate || undefined}
-          hours={hours}
+          industry={industry}
+          lengthWeeks={lengthWeeks}
+          weeklyHoursLow={weeklyHoursLow}
+          weeklyHoursHigh={weeklyHoursHigh}
+          ageMin={ageMin}
+          ageMax={ageMax}
           address={splitAddress}
+          hourlyPay={hourlyPay}
         />
         <p className={styles.description}>{description}</p>
       </div>
@@ -70,9 +82,12 @@ export default function Internship({
         <div className={styles.internshipInfo}>
           <h2 className={styles.title}>{title}</h2>
           <QuickInfo
-            startDate={parsedStartDate || undefined}
-            endDate={parsedEndDate || undefined}
-            hours={hours}
+            industry={industry}
+            lengthWeeks={lengthWeeks}
+            weeklyHoursLow={weeklyHoursLow}
+            weeklyHoursHigh={weeklyHoursHigh}
+            ageMin={ageMin}
+            ageMax={ageMax}
             address={splitAddress}
             hourlyPay={hourlyPay}
           />
@@ -101,37 +116,57 @@ function InfoChip({ icon, children }: InfoChipProps) {
 }
 
 type QuickInfoProps = {
-  startDate?: Date;
-  endDate?: Date;
-  hours?: number;
+  industry?: string;
+  lengthWeeks?: number;
+  weeklyHoursLow?: number;
+  weeklyHoursHigh?: number;
+  ageMin?: number;
+  ageMax?: number;
   address?: string[];
   fullAddress?: boolean;
   hourlyPay?: number;
 };
 export function QuickInfo({
-  startDate,
-  endDate,
-  hours,
+  industry,
+  lengthWeeks,
+  weeklyHoursLow,
+  weeklyHoursHigh,
+  ageMin,
+  ageMax,
   address,
   fullAddress = false,
   hourlyPay,
 }: QuickInfoProps) {
   return (
     <div className={styles.quickInfo}>
-      {startDate && endDate && (
+      {industry && (
+        <InfoChip
+          icon={<span className="material-symbols-outlined">factory</span>}>
+          {industry}
+        </InfoChip>
+      )}
+      {lengthWeeks && (
         <InfoChip
           icon={
             <span className="material-symbols-outlined">calendar_month</span>
           }>
-          {startDate.toLocaleDateString("en-US", {
-            month: "short",
-            year: "numeric",
-          })}
-          {" - "}
-          {endDate.toLocaleDateString("en-US", {
-            month: "short",
-            year: "numeric",
-          })}
+          {lengthWeeks} week{lengthWeeks !== 1 ? "s" : ""}
+        </InfoChip>
+      )}
+      {(weeklyHoursLow || weeklyHoursHigh) && (
+        <InfoChip
+          icon={<span className="material-symbols-outlined">schedule</span>}>
+          {weeklyHoursLow || ""}
+          {weeklyHoursLow && weeklyHoursHigh ? "-" : ""}
+          {weeklyHoursHigh || ""} hrs/wk
+        </InfoChip>
+      )}
+      {(ageMin || ageMax) && (
+        <InfoChip
+          icon={<span className="material-symbols-outlined">cake</span>}>
+          {ageMin || ""}
+          {ageMin && ageMax ? "-" : ""}
+          {ageMax || ""} yrs
         </InfoChip>
       )}
       {address &&
@@ -161,12 +196,6 @@ export function QuickInfo({
               }
             </InfoChip>
           ))}
-      {hours && (
-        <InfoChip
-          icon={<span className="material-symbols-outlined">schedule</span>}>
-          {hours} hrs/wk
-        </InfoChip>
-      )}
       {hourlyPay && (
         <InfoChip
           icon={

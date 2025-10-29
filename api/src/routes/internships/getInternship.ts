@@ -12,7 +12,20 @@ export const getInternship = authorizedProcedure
   .query(async (opts) => {
     const results = await opts.ctx.env.DB.prepare(
       `SELECT
-        id, title, start_date, end_date, weekly_hours, description, address, business, hourly_pay
+        id,
+        title,
+        business,
+        website_url,
+        email,
+        description,
+        industry,
+        length_weeks,
+        weekly_hours_low,
+        weekly_hours_high,
+        age_min,
+        age_max,
+        address,
+        hourly_pay
       FROM Internships
       WHERE id = ?
       LIMIT 1;`

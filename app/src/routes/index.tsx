@@ -22,7 +22,26 @@ export default function Index() {
       <div className={styles.content}>
         {userInfo.data ?
           <MainContent userInfo={userInfo.data} />
-        : <div>Welcome! Lorem ipsum something something</div>}
+        : <div className={styles.welcome}>
+            <h1 className={styles.welcomeTitle}>Welcome!</h1>
+            <p className={styles.welcomeText}>
+              iFind is a high school internship finder with a particular focus
+              on local opportunities that will make a difference to the
+              community.
+            </p>
+            <p className={styles.welcomeText}>
+              We list internships in the area as well as remote internships.
+            </p>
+            <p className={styles.welcomeText}>
+              You are viewing the instance of the app for the{" "}
+              <strong>Bloomington</strong> area.
+            </p>
+            <p className={styles.welcomeText}>
+              To get started, please log in or sign up using the buttons in the
+              top right corner.
+            </p>
+          </div>
+        }
       </div>
     </div>
   );
@@ -115,10 +134,14 @@ function InternshipsList() {
           <Internship
             title={internship.title}
             description={internship.description}
-            startDate={internship.start_date}
-            endDate={internship.end_date}
-            hours={internship.weekly_hours}
+            industry={internship.industry}
+            lengthWeeks={internship.length_weeks}
+            weeklyHoursLow={internship.weekly_hours_low}
+            weeklyHoursHigh={internship.weekly_hours_high}
+            ageMin={internship.age_min}
+            ageMax={internship.age_max}
             address={internship.address}
+            hourlyPay={internship.hourly_pay}
           />
         </Link>
       ))}

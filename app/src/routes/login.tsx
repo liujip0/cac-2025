@@ -63,7 +63,7 @@ export default function Login() {
           id="login-password"
           className={styles.input}
           value={password}
-          onChange={(value) => {
+          onChange={(value: string) => {
             setPassword(value);
           }}
           label="Password"

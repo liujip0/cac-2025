@@ -17,7 +17,7 @@ export default function TopBar({ user }: TopBarProps) {
         <Link
           to="/"
           className={linkStyles.inheritLink}>
-          HS Internship Finder
+          iFind
         </Link>
       </h1>
       {user ?

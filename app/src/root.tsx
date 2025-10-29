@@ -20,7 +20,7 @@ import { queryClient } from "./trpc.ts";
 export const meta: MetaFunction = () => {
   return [
     {
-      title: "HS Internship Finder",
+      title: "iFind - High School Internship Finder",
     },
   ];
 };

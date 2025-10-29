@@ -10,11 +10,11 @@
     --text-helperText-size-fallback
   ); /* default: 0.75em */
 
-  --color-primary: tan; /* default: blue */
-  --color-primary-contrastText: black; /* default: white */
-  --color-secondary: gray; /* default: orange */
+  --color-primary: #183c40; /* default: blue */
+  --color-primary-contrastText: white; /* default: white */
+  --color-secondary: #b0d5cd; /* default: orange */
   --color-secondary-contrastText: black; /* default: white */
-  --color-background: white; /* default: white */
+  --color-background: #f9f9f9; /* default: white */
   --color-background-contrastText: black; /* default: black */
   --color-paper: lightgray; /* default: gray */
   --color-paper-contrastText: black; /* default: black */

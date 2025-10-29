@@ -48,7 +48,7 @@ export default function ViewInternship({ params }: Route.ComponentProps) {
               <QuickInfo
                 startDate={parsedStartDate || undefined}
                 endDate={parsedEndDate || undefined}
-                hours={getInternship.data.weekly_hours || undefined}
+                weeklyHours={getInternship.data.weekly_hours || undefined}
                 address={splitAddress}
                 fullAddress
                 hourlyPay={getInternship.data.hourly_pay}

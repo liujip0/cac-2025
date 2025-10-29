@@ -23,3 +23,37 @@
 
   overflow-y: auto;
 }
+
+.welcome {
+  margin: 32px;
+  padding: 16px;
+  width: 100%;
+
+  border: var(--border-width) solid var(--color-primary);
+  border-radius: var(--border-radius);
+  background-color: var(--color-paper);
+}
+
+.welcomeTitle {
+  margin-bottom: 16px;
+  width: min-content;
+  padding: 8px 16px;
+
+  font-size: var(--text-h1-size);
+  font-family: var(--text-font-family);
+  color: var(--color-background-contrastText);
+  background-color: var(--color-secondary);
+  border-radius: var(--border-radius);
+}
+
+.welcomeText {
+  width: max-content;
+  padding: 8px 16px;
+  margin-bottom: 8px;
+
+  font-size: var(--text-body-size);
+  font-family: var(--text-font-family);
+  color: var(--color-background-contrastText);
+  background-color: var(--color-secondary);
+  border-radius: var(--border-radius);
+}
