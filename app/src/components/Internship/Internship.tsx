@@ -94,10 +94,10 @@ export default function Internship({
           <p className={styles.description}>{description}</p>
         </div>
         <div className={styles.imageContainer}>
-          <img
+          {/* <img
             className={styles.image + " " + styles.imageWide}
             src={import.meta.env.BASE_URL + "Example.jpg"}
-          />
+          /> */}
         </div>
       </div>;
 }

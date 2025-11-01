@@ -52,9 +52,11 @@ export default function Filters({
         }}>
         <option value="All">All</option>
         <option value="Business">Business</option>
+        <option value="Education">Education</option>
         <option value="Insurance">Insurance</option>
         <option value="Management">Management</option>
         <option value="Marketing">Marketing</option>
+        <option value="Retail">Retail</option>
       </Select>
     </div>
   );
