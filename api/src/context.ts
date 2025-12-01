@@ -8,19 +8,23 @@ export const createContext = async ({
 }: FetchCreateContextFnOptions & {
   env: Env;
 }) => {
-  const responseHeaders = resHeaders;
-  responseHeaders.set("Access-Control-Allow-Origin", "*");
-  responseHeaders.set(
-    "Access-Control-Allow-Headers",
-    "*, Content-Type, Authorization"
+  resHeaders.set("Access-Control-Allow-Origin", env.FRONTEND_URL);
+  resHeaders.set("Vary", "Origin");
+  resHeaders.set(
+    "Access-Control-Expose-Headers",
+    "Content-Type,Authorization,Accept"
   );
-  responseHeaders.set("Access-Control-Allow-Methods", "*");
-  responseHeaders.set("Allow", "GET, POST, OPTIONS");
-
+  resHeaders.set("Access-Control-Max-Age", (60 * 60 * 24).toString());
+  resHeaders.set("Access-Control-Allow-Credentials", "true");
+  resHeaders.set("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+  resHeaders.set(
+    "Access-Control-Allow-Headers",
+    "Content-Type,Authorization,Accept,Accept-Language"
+  );
   return {
     req,
     env,
-    resHeaders: responseHeaders,
+    resHeaders,
   };
 };
 
